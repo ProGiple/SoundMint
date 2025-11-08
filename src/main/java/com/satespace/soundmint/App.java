@@ -12,6 +12,7 @@ public class App extends Application {
     public static final String PATH = App.class.getPackageName();
     public static final String TITLE = "SoundMint";
     public static final Storage STORAGE;
+    public static AppController CONTROLLER;
     static {
         STORAGE = new Storage();
     }
@@ -25,6 +26,8 @@ public class App extends Application {
         stage.setTitle(TITLE);
         stage.setScene(scene);
         stage.show();
+
+        CONTROLLER = fxmlLoader.getController();
     }
 
     public static void main(String[] args) {

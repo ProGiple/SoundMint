@@ -6,10 +6,12 @@ import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import lombok.Getter;
 
+@Getter
 public class PlaylistPane extends Pane {
-    public static final int ROTATE_ANGLE = 10;
-    public static final double SIZE_MULTIPLIER = 0.8;
+    public static final int ROTATE_ANGLE = 5;
+    public static final double SIZE_MULTIPLIER = 0.9;
 
     private final Playlist playlist;
     public PlaylistPane(Playlist playlist) {
@@ -19,6 +21,10 @@ public class PlaylistPane extends Pane {
         this.setOnMouseClicked(e -> App.exit());
         this.setOnMouseEntered(e -> playAnimation(ROTATE_ANGLE, SIZE_MULTIPLIER));
         this.setOnMouseExited(e -> playAnimation(0, 1.0));
+    }
+
+    public PlaylistPane() {
+        this(new Playlist());
     }
 
     private void playAnimation(int rotateAngle, double sizeMultiplier) {

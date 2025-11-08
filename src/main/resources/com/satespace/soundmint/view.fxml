@@ -10,11 +10,17 @@
             stylesheets="@style.css"
             styleClass="body">
     <top>
-        <ScrollPane fx:id="playListScroller" hbarPolicy="NEVER" vbarPolicy="NEVER" fitToHeight="true">
+        <ScrollPane
+                fx:id="playListScroller"
+                hbarPolicy="NEVER"
+                vbarPolicy="NEVER"
+                fitToHeight="true"
+                styleClass="no-border"
+                fitToWidth="true">
             <HBox
                     fx:id="topPlayListBlock"
                     alignment="CENTER_LEFT"
-                    styleClass="topPlayListBlock"/>
+                    styleClass="playlist-block"/>
         </ScrollPane>
     </top>
 </BorderPane>

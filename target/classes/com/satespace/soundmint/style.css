@@ -1,21 +1,37 @@
-.body {
-    -fx-background-color: #272727;
+.no-border {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
 }
 
-.topPlayListBlock {
+.body {
+    -fx-background-color: #141414;
+}
+
+.playlist-scroller {
+    -fx-background-radius: 15;
+}
+
+.playlist-block {
     -fx-spacing: 20;
     -fx-padding: 20;
+    -fx-background-color: #141414;
 }
 
 .playlist-base-pane {
-    -fx-min-height: 120px;
-    -fx-pref-height: 120px;
-    -fx-pref-width: 120px;
-    -fx-min-width: 120px;
+    -fx-min-height: 90px;
+    -fx-pref-height: 90px;
+    -fx-pref-width: 90px;
+    -fx-min-width: 90px;
     -fx-background-radius: 10px;
 }
 
 .playlist-pane {
-    -fx-background-color: #000000;
-    -fx-effect: dropshadow(gaussian, rgba(121, 13, 161, 0.78), 20, 0.4, 0, 0);
+    -fx-background-color: #262626;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 20, 0.4, 0, 0);
+}
+
+.create-playlist-pane {
+    -fx-background-color: #272727;
 }

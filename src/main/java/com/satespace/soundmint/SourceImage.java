@@ -14,7 +14,7 @@ public enum SourceImage {
         this.image = new Image(stream);
     }
 
-    public Image get() {
+    public Image asImage() {
         return this.image;
     }
 }

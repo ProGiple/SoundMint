@@ -1,11 +1,9 @@
 package com.satespace.soundmint.items;
 
-import com.satespace.soundmint.App;
 import com.satespace.soundmint.SourceImage;
 import com.satespace.soundmint.musix.Playlist;
 import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,7 +24,7 @@ public class PlaylistPane extends Pane {
         this.playlist = playlist;
         this.getStyleClass().addAll("playlist-pane", "playlist-base-pane");
 
-        Image image = playlist.getImage() == null ? SourceImage.PLAYLIST_DEFAULT_IMAGE.get() : playlist.getImage();
+        Image image = playlist.getImage() == null ? SourceImage.PLAYLIST_DEFAULT_IMAGE.asImage() : playlist.getImage();
         ImageView imageView = new ImageView(image);
         imageView.setOpacity(IMAGE_OPACITY);
         imageView.setPreserveRatio(true);
@@ -38,7 +36,7 @@ public class PlaylistPane extends Pane {
         stackPane.prefHeightProperty().bind(this.heightProperty());
         this.getChildren().add(stackPane);
 
-        this.setOnMouseClicked(e -> App.exit());
+        this.setOnMouseClicked(e -> System.out.println("Clicked"));
         this.setOnMouseEntered(e -> playAnimation(ROTATE_ANGLE, SIZE_MULTIPLIER));
         this.setOnMouseExited(e -> playAnimation(0, 1.0));
     }

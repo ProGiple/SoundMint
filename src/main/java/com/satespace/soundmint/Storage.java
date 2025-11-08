@@ -11,6 +11,6 @@ import java.util.List;
 public class Storage {
     private final List<Playlist> playlists = new ArrayList<>();
     public Storage() {
-
+        playlists.add(new Playlist());
     }
 }

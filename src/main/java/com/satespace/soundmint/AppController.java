@@ -7,11 +7,10 @@ import com.satespace.soundmint.items.TrackAudioBar;
 import com.satespace.soundmint.items.musicButtons.NextMusicButton;
 import com.satespace.soundmint.items.musicButtons.PreviousMusicButton;
 import com.satespace.soundmint.items.musicButtons.SwitchStatusMusicButton;
-import com.satespace.soundmint.musix.Playlist;
+import com.satespace.soundmint.musix.collection.Playlist;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import lombok.Getter;
 
 @Getter

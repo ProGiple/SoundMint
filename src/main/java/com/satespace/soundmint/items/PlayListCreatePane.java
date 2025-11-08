@@ -17,6 +17,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+import java.util.List;
+
 public class PlayListCreatePane extends Pane {
     public static final double IMAGE_OPACITY = 0.2;
     public static final int IMAGE_FIT_HEIGHT = 50;
@@ -67,12 +69,10 @@ public class PlayListCreatePane extends Pane {
     }
 
     private void playOpacityAnimation() {
-        ObservableList<Node> list = App.CONTROLLER.getTopPlayListBlock().getChildren();
+        List<PlaylistPane> list = App.CONTROLLER.getTopPlayListBlock().getPanes();
         for (int i = 0; i < list.size(); i++) {
             Node node = list.get(i);
-            if (node instanceof PlaylistPane) {
-                this.playOpacityAnimation(node, ON_HOVER_PANES_PAUSE_MILLIS * i);
-            }
+            this.playOpacityAnimation(node, ON_HOVER_PANES_PAUSE_MILLIS * i);
         }
     }
 

@@ -1,4 +1,4 @@
 package com.satespace.soundmint.musix.meta;
 
-public abstract class Meta {
+public interface Meta {
 }

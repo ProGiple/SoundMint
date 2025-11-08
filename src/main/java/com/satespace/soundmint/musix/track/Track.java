@@ -10,7 +10,6 @@ import java.io.File;
 
 @Getter
 public class Track extends MetaContainer<TrackMeta> {
-//    private final Playlist playlist;
     private final File file;
     private final Image artwork;
     private final int duration;

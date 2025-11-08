@@ -1,5 +1,6 @@
 package com.satespace.soundmint.musix;
 
+import com.satespace.soundmint.musix.meta.Meta;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class TrackMeta {
+public class TrackMeta implements Meta {
     private String name;
     private String artist = "Неизвестный";
     private String album = "Не указан";

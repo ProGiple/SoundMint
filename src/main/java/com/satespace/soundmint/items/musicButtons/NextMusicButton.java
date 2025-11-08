@@ -1,5 +1,6 @@
 package com.satespace.soundmint.items.musicButtons;
 
+import com.satespace.soundmint.App;
 import com.satespace.soundmint.SourceImage;
 import javafx.event.ActionEvent;
 
@@ -10,7 +11,7 @@ public class NextMusicButton extends AbsMusicButton {
 
     @Override
     protected void onClick(ActionEvent event) {
-
+        App.STORAGE.activeTrackEnvironment().playNext();
     }
 
     @Override

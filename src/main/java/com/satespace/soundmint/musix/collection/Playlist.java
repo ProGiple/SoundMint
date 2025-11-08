@@ -1,19 +1,20 @@
 package com.satespace.soundmint.musix.collection;
 
+import com.satespace.soundmint.musix.meta.MetaContainer;
 import com.satespace.soundmint.musix.track.Track;
-import javafx.scene.image.Image;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class Playlist {
+public class Playlist extends MetaContainer<PlaylistMeta> {
     private final List<Track> trackList;
-    private Image image;
 
     public Playlist() {
+        super(new PlaylistMeta());
         this.trackList = new ArrayList<>();
+
     }
 
     public void addTrack(Track track) {

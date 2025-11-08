@@ -1,6 +1,9 @@
 package com.satespace.soundmint.items.musicButtons;
 
+import com.satespace.soundmint.App;
 import com.satespace.soundmint.SourceImage;
+import com.satespace.soundmint.musix.collection.Playlist;
+import com.satespace.soundmint.musix.track.Track;
 import javafx.event.ActionEvent;
 
 public class SwitchStatusMusicButton extends AbsMusicButton {
@@ -11,10 +14,15 @@ public class SwitchStatusMusicButton extends AbsMusicButton {
 
     @Override
     protected void onClick(ActionEvent event) {
-        this.isPlayed = !this.isPlayed;
+        this.isPlayed = !isPlayed;
 
-        SourceImage image = this.isPlayed ? SourceImage.TRACK_PLAYED_BUTTON : SourceImage.TRACK_PAUSED_BUTTON;
+        SourceImage image = isPlayed ? SourceImage.TRACK_PLAYED_BUTTON : SourceImage.TRACK_PAUSED_BUTTON;
         this.replaceImage(image, IMAGE_SIZE);
+        if (!isPlayed) {
+            Playlist playlist = App.STORAGE.playlists().getFirst();
+            Track track = playlist.getTrackList().getFirst();
+            App.STORAGE.activeTrackEnvironment().play(track, playlist);
+        }
     }
 
     @Override

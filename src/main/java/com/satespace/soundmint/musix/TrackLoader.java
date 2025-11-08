@@ -13,7 +13,7 @@ import java.util.Map;
 
 @UtilityClass
 public class TrackLoader {
-    public void loadTrack(File file) {
+    public Track loadTrack(File file) {
 
         TrackMeta meta = new TrackMeta(file);
 
@@ -24,8 +24,9 @@ public class TrackLoader {
 
             extractMetadata(properties, meta);
 
-            Track simpleTrack = new Track(meta, file, duration);
+            return new Track(meta, file, duration);
         }
+        return null;
     }
 
 

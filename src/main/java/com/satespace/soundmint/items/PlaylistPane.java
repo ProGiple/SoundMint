@@ -24,7 +24,7 @@ public class PlaylistPane extends Pane {
         this.playlist = playlist;
         this.getStyleClass().addAll("playlist-pane", "playlist-base-pane");
 
-        Image image = playlist.getImage() == null ? SourceImage.PLAYLIST_DEFAULT_IMAGE.asImage() : playlist.getImage();
+        Image image = playlist.getMetaObject().getArtwork() == null ? SourceImage.PLAYLIST_DEFAULT_IMAGE.asImage() : playlist.getMetaObject().getArtwork();
         ImageView imageView = new ImageView(image);
         imageView.setOpacity(IMAGE_OPACITY);
         imageView.setPreserveRatio(true);

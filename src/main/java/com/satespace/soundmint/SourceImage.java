@@ -5,7 +5,8 @@ import javafx.scene.image.Image;
 import java.io.InputStream;
 
 public enum SourceImage {
-    PLAYLIST_DEFAULT_IMAGE;
+    PLAYLIST_DEFAULT_IMAGE,
+    CREATE_PLAYLIST_BUTTON;
 
     private final Image image;
     SourceImage() {

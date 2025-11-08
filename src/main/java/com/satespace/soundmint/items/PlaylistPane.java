@@ -5,7 +5,6 @@ import com.satespace.soundmint.SourceImage;
 import com.satespace.soundmint.musix.Playlist;
 import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

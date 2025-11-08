@@ -10,7 +10,9 @@ import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import lombok.Getter;
 
+@Getter
 public class AppController {
     @FXML protected HBox topPlayListBlock;
     @FXML protected ScrollPane playListScroller;

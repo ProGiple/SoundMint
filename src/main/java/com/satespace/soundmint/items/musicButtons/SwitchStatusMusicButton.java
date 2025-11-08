@@ -18,10 +18,12 @@ public class SwitchStatusMusicButton extends AbsMusicButton {
 
         SourceImage image = isPlayed ? SourceImage.TRACK_PLAYED_BUTTON : SourceImage.TRACK_PAUSED_BUTTON;
         this.replaceImage(image, IMAGE_SIZE);
-        if (!isPlayed) {
+        if (isPlayed) {
             Playlist playlist = App.STORAGE.playlists().getFirst();
             Track track = playlist.getTrackList().getFirst();
             App.STORAGE.activeTrackEnvironment().play(track, playlist);
+        } else {
+            App.STORAGE.activeTrackEnvironment().pause();
         }
     }
 

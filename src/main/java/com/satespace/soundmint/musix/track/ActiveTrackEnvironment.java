@@ -26,9 +26,10 @@ public class ActiveTrackEnvironment {
             this.previousTrack = playlist.getTrackList().get(activeTrackIndex - 1);
         if (activeTrackIndex != playlist.getTrackList().size() - 1)
             this.nextTrack = playlist.getTrackList().get(activeTrackIndex + 1);
-
-        mediaPlayer.stop();
-        mediaPlayer.dispose();
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.dispose();
+        }
         Media media = new Media(track.getFile().toURI().toString());
         this.mediaPlayer = new MediaPlayer(media);
 

@@ -6,6 +6,10 @@ import java.io.InputStream;
 
 public enum SourceImage {
     PLAYLIST_DEFAULT_IMAGE,
+    NEXT_TRACK_BUTTON,
+    PREVIOUS_TRACK_BUTTON,
+    TRACK_PLAYED_BUTTON,
+    TRACK_PAUSED_BUTTON,
     CREATE_PLAYLIST_BUTTON;
 
     private final Image image;

@@ -1,5 +1,6 @@
 package com.satespace.soundmint.musix;
 
+import com.satespace.soundmint.musix.track.Track;
 import com.satespace.soundmint.util.Utils;
 import lombok.experimental.UtilityClass;
 
@@ -23,7 +24,7 @@ public class TrackLoader {
 
             extractMetadata(properties, meta);
 
-            SimpleTrack simpleTrack = new SimpleTrack(file, meta, duration);
+            Track simpleTrack = new Track(meta, file, duration);
         }
     }
 

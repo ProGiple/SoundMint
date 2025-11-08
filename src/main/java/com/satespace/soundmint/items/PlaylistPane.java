@@ -42,7 +42,7 @@ public class PlaylistPane extends Pane {
     }
 
     public PlaylistPane() {
-        this(new SimplePlaylist());
+        this(new Playlist());
     }
 
     private void playAnimation(int rotateAngle, double sizeMultiplier) {

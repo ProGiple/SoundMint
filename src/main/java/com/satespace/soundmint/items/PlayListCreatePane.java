@@ -42,7 +42,7 @@ public class PlayListCreatePane extends Pane {
         HBox.setMargin(this, new Insets(0, 20, 0, 10));
         this.setOnMouseClicked(e -> {
             Playlist playlist = new Playlist();
-            App.STORAGE.simplePlaylists().add(playlist);
+            App.STORAGE.playlists().add(playlist);
 
             PlaylistPane pane = App.CONTROLLER.createPlaylistPane(playlist);
             pane.setScaleX(0);

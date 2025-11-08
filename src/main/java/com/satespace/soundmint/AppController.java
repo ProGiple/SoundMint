@@ -16,8 +16,8 @@ public class AppController {
     public void initialize() {
         PlayListCreatePane playListCreatePane = new PlayListCreatePane();
         this.topPlayListBlock.getChildren().add(playListCreatePane);
-        for (int i = 0; i < App.STORAGE.simplePlaylists().size(); i++) {
-            this.createPlaylistPane(App.STORAGE.simplePlaylists().get(i));
+        for (int i = 0; i < App.STORAGE.playlists().size(); i++) {
+            this.createPlaylistPane(App.STORAGE.playlists().get(i));
         }
 
         this.playListScroller.setOnScroll(event -> {

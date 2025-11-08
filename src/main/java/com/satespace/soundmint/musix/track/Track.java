@@ -12,9 +12,9 @@ import java.io.File;
 public class Track extends MetaContainer<TrackMeta> {
     private final File file;
     private final Image artwork;
-    private final int duration;
+    private final double duration;
 
-    public Track(TrackMeta trackMeta, File file, int duration) {
+    public Track(TrackMeta trackMeta, File file, double duration) {
         super(trackMeta);
         this.file = file;
         this.duration = duration;

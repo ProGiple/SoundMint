@@ -23,9 +23,9 @@ public class ActiveTrackEnvironment {
 
         int activeTrackIndex = playlist.getTrackList().indexOf(activeTrack);
         if (activeTrackIndex != 0)
-            this.nextTrack = playlist.getTrackList().get(activeTrackIndex + 1);
-        if (activeTrackIndex != playlist.getTrackList().size() - 1)
             this.previousTrack = playlist.getTrackList().get(activeTrackIndex - 1);
+        if (activeTrackIndex != playlist.getTrackList().size() - 1)
+            this.nextTrack = playlist.getTrackList().get(activeTrackIndex + 1);
 
         mediaPlayer.stop();
         mediaPlayer.dispose();

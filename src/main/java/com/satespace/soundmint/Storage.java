@@ -4,7 +4,6 @@ import com.satespace.soundmint.musix.TrackLoader;
 import com.satespace.soundmint.musix.collection.Favourites;
 import com.satespace.soundmint.musix.collection.Playlist;
 import com.satespace.soundmint.musix.track.ActiveTrackEnvironment;
-import com.satespace.soundmint.musix.track.Track;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
@@ -20,14 +19,14 @@ public class Storage {
 
     private final ActiveTrackEnvironment activeTrackEnvironment = new ActiveTrackEnvironment();
 
-    private final List<Track> loadedTracks = new ArrayList<>();
 
     public Storage() {
         playlists.add(new Playlist());
         String userHome = System.getProperty("user.home");
         File musicDir = new File(userHome, "Music");
         for (File file: Objects.requireNonNull(musicDir.listFiles())) {
-            loadedTracks.add(TrackLoader.loadTrack(file));
+            if (file.getName().endsWith(".mp3") || file.getName().endsWith(".wav"))
+                playlists.getFirst().getTrackList().add(TrackLoader.loadTrack(file));
         }
     }
 

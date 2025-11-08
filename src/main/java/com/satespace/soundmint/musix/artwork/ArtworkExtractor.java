@@ -1,14 +1,14 @@
 package com.satespace.soundmint.musix.artwork;
 
 import com.satespace.soundmint.SourceImage;
-import com.satespace.soundmint.util.Utils;
 import javafx.scene.image.Image;
+import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
 
-import javax.sound.sampled.AudioFileFormat;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.util.Map;
 
 @UtilityClass
 public class ArtworkExtractor {
@@ -24,20 +24,13 @@ public class ArtworkExtractor {
         return artwork;
     }
 
-    private Image getEmbeddedArtwork(File audioFile) {
+    @SneakyThrows
+    private Image getEmbeddedArtwork(File file) {
 
-        AudioFileFormat fileFormat = Utils.getAudioFileFormat(audioFile);
-        if (fileFormat != null) {
-            Map<String, Object> properties = fileFormat.properties();
-            System.out.println(properties.keySet());
+        AudioFile audioFile = AudioFileIO.read(file);
+        if (audioFile != null) {
 
-            if (properties.containsKey("image")) {
-                Object imageData = properties.get("image");
-
-                if (imageData instanceof byte[] imageBytes) {
-                    return new Image(new ByteArrayInputStream(imageBytes));
-                }
-            }
+            return new Image(new ByteArrayInputStream(audioFile.getTag().getFirstArtwork().getBinaryData()));
         }
 
         return null;

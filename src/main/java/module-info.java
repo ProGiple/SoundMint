@@ -4,6 +4,7 @@ module com.satespace.soundmint {
     requires static lombok;
     requires java.desktop;
     requires javafx.media;
+    requires jaudiotagger;
 
     opens com.satespace.soundmint to javafx.fxml;
     exports com.satespace.soundmint;

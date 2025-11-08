@@ -11,6 +11,8 @@ import com.satespace.soundmint.musix.collection.Playlist;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import lombok.Getter;
 
 @Getter
@@ -23,9 +25,17 @@ public class AppController {
     @FXML protected Label trackTitle;
     @FXML protected Label trackArtist;
     @FXML protected TrackAudioBar trackAudioBar;
+    @FXML protected StackPane sliderContainer;
+    @FXML protected Region fillBar;
 
     public void initialize() {
-        Platform.runLater(() -> this.topPlayListBlock.loadPanes());
+        Platform.runLater(() -> {
+            this.topPlayListBlock.loadPanes();
+            sliderContainer
+                    .widthProperty()
+                    .addListener((obs, oldVal, newVal) ->
+                            trackAudioBar.updateBar(newVal.doubleValue()));
+        });
     }
 
     public PlaylistPane createPlaylistPane(Playlist playlist) {

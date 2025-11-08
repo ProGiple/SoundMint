@@ -10,6 +10,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.control.Slider?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.satespace.soundmint.AppController"
             prefWidth="400"
@@ -50,10 +51,13 @@
                         <Label fx:id="trackTitle" text="Название" styleClass="track-label" />
                         <Label fx:id="trackArtist" text="Исполнитель" styleClass="track-label" />
                     </HBox>
-                    <TrackAudioBar fx:id="trackAudioBar"
-                                   prefWidth="250"
-                                   prefHeight="7"
-                                   styleClass="track-progress"/>
+                    <StackPane fx:id="sliderContainer" alignment="CENTER_LEFT" prefWidth="300">
+                        <Region fx:id="fillBar" styleClass="slider-fill"/>
+                        <TrackAudioBar fx:id="trackAudioBar"
+                                       prefWidth="250"
+                                       max="1"
+                                       styleClass="track-progress"/>
+                    </StackPane>
                 </VBox>
             </VBox>
         </HBox>

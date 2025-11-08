@@ -37,6 +37,16 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 20, 0.4, 0, 0);
 }
 
+.track-progress .thumb {
+    -fx-opacity: 0;
+}
+
 .track-progress {
-    -fx-control-inner-background: #262626;
+    -fx-background-color: red;
+    -fx-pref-height: 6;
+    -fx-background-radius: 5;
+}
+
+.track-progress .track {
+    -fx-background-color: transparent;
 }

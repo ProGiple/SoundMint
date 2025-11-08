@@ -1,7 +1,7 @@
 package com.satespace.soundmint.items;
 
 import com.satespace.soundmint.SourceImage;
-import com.satespace.soundmint.musix.Playlist;
+import com.satespace.soundmint.musix.collection.Playlist;
 import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Pos;
@@ -42,7 +42,7 @@ public class PlaylistPane extends Pane {
     }
 
     public PlaylistPane() {
-        this(new Playlist());
+        this(new SimplePlaylist());
     }
 
     private void playAnimation(int rotateAngle, double sizeMultiplier) {

@@ -2,7 +2,7 @@ package com.satespace.soundmint.items;
 
 import com.satespace.soundmint.App;
 import com.satespace.soundmint.SourceImage;
-import com.satespace.soundmint.musix.Playlist;
+import com.satespace.soundmint.musix.collection.Playlist;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
@@ -27,7 +27,7 @@ public class PlayListCreatePane extends Pane {
     public PlayListCreatePane() {
         this.getStyleClass().addAll("playlist-base-pane", "create-playlist-pane");
 
-        Image image = SourceImage.CREATE_PLAYLIST_BUTTON.get();
+        Image image = SourceImage.CREATE_PLAYLIST_BUTTON.asImage();
         ImageView imageView = new ImageView(image);
         imageView.setOpacity(IMAGE_OPACITY);
         imageView.setPreserveRatio(true);
@@ -42,7 +42,7 @@ public class PlayListCreatePane extends Pane {
         HBox.setMargin(this, new Insets(0, 20, 0, 10));
         this.setOnMouseClicked(e -> {
             Playlist playlist = new Playlist();
-            App.STORAGE.playlists().add(playlist);
+            App.STORAGE.simplePlaylists().add(playlist);
 
             PlaylistPane pane = App.CONTROLLER.createPlaylistPane(playlist);
             pane.setScaleX(0);

@@ -23,7 +23,7 @@ public class TrackLoader {
 
             extractMetadata(properties, meta);
 
-            Track track = new Track(file, meta, duration);
+            SimpleTrack simpleTrack = new SimpleTrack(file, meta, duration);
         }
     }
 

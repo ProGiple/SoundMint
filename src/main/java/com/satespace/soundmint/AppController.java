@@ -2,14 +2,10 @@ package com.satespace.soundmint;
 
 import com.satespace.soundmint.items.PlayListCreatePane;
 import com.satespace.soundmint.items.PlaylistPane;
-import com.satespace.soundmint.musix.Playlist;
-import javafx.application.Platform;
+import com.satespace.soundmint.musix.collection.Playlist;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import lombok.Getter;
 
 @Getter
@@ -20,8 +16,8 @@ public class AppController {
     public void initialize() {
         PlayListCreatePane playListCreatePane = new PlayListCreatePane();
         this.topPlayListBlock.getChildren().add(playListCreatePane);
-        for (int i = 0; i < App.STORAGE.playlists().size(); i++) {
-            this.createPlaylistPane(App.STORAGE.playlists().get(i));
+        for (int i = 0; i < App.STORAGE.simplePlaylists().size(); i++) {
+            this.createPlaylistPane(App.STORAGE.simplePlaylists().get(i));
         }
 
         this.playListScroller.setOnScroll(event -> {
@@ -30,8 +26,8 @@ public class AppController {
         });
     }
 
-    public PlaylistPane createPlaylistPane(Playlist playlist) {
-        PlaylistPane pane = new PlaylistPane(playlist);
+    public PlaylistPane createPlaylistPane(Playlist simplePlaylist) {
+        PlaylistPane pane = new PlaylistPane(simplePlaylist);
         this.topPlayListBlock.getChildren().add(pane);
 
         return pane;

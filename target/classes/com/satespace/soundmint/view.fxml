@@ -20,7 +20,7 @@
             <HBox
                     fx:id="topPlayListBlock"
                     alignment="CENTER_LEFT"
-                    styleClass="playlist-block"/>
+                    styleClass="simplePlaylist-block"/>
         </ScrollPane>
     </top>
 </BorderPane>

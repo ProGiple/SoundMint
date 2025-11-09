@@ -39,7 +39,6 @@ public class App extends Application {
         stage.show();
 
         STAGE = stage;
-
         CONTROLLER = fxmlLoader.getController();
     }
 

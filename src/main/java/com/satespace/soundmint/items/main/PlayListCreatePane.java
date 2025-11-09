@@ -4,6 +4,7 @@ import com.satespace.soundmint.App;
 import com.satespace.soundmint.SourceImage;
 import com.satespace.soundmint.items.abs.Clickable;
 import com.satespace.soundmint.items.abs.CollectionPane;
+import com.satespace.soundmint.items.abs.animations.RotateScalingAnimated;
 import com.satespace.soundmint.musix.playlist.Playlist;
 import com.satespace.soundmint.util.Utils;
 import javafx.animation.FadeTransition;
@@ -20,7 +21,7 @@ import javafx.util.Duration;
 
 import java.util.List;
 
-public class PlayListCreatePane extends Pane implements Clickable<MouseEvent> {
+public class PlayListCreatePane extends Pane implements Clickable<MouseEvent>, RotateScalingAnimated {
     public static final double IMAGE_OPACITY = 0.2;
     public static final int IMAGE_FIT_HEIGHT = 25;
     public static final double ON_HOVER_PANES_OPACITY = 0.65;
@@ -39,11 +40,13 @@ public class PlayListCreatePane extends Pane implements Clickable<MouseEvent> {
         this.setOnMouseEntered(e -> {
             isHovered = true;
             this.playOpacityAnimation();
+            this.playAnimation(ROTATE_ANGLE, SIZE_MULTIPLIER, this);
         });
 
         this.setOnMouseExited(e -> {
             isHovered = false;
             this.playOpacityAnimation();
+            this.playAnimation(0, 1.0, this);
         });
     }
 

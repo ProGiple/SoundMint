@@ -13,13 +13,12 @@ public class ImagedButton extends Button {
         this.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
     }
 
-    protected ImageView replaceImage(SourceImage sourceImage, int size) {
+    protected void replaceImage(SourceImage sourceImage, int size) {
         ImageView imageView = new ImageView(sourceImage.asImage());
         imageView.setFitWidth(size);
         imageView.setFitHeight(size);
 
         this.setGraphic(imageView);
         this.imageView = imageView;
-        return imageView;
     }
 }

@@ -17,12 +17,11 @@ public class PreviousMusicButton extends AbsMusicButton {
         if (isAllowed()) {
             environment.playPrevious();
         }
-        this.updateState();
-        App.CONTROLLER.getSwitchStatusMusicButton().updateImage(!environment.isPlaying());
     }
 
     @Override
     protected boolean isAllowed() {
+        System.out.println(App.STORAGE.activeTrackEnvironment().getPrevious());
         return App.STORAGE.activeTrackEnvironment().getPrevious() != null;
     }
 }

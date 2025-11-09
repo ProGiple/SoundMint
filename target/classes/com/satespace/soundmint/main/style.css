@@ -50,6 +50,10 @@
 
 }
 
+.track-circle {
+    opacity: 0;
+}
+
 .track-bar .bar {
     -fx-background-radius: 5;
     -fx-pref-width: 250;

@@ -26,13 +26,11 @@ public class ArtworkExtractor {
 
     @SneakyThrows
     private Image getEmbeddedArtwork(File file) {
-
         AudioFile audioFile = AudioFileIO.read(file);
-        if (audioFile != null) {
-
+        try {
             return new Image(new ByteArrayInputStream(audioFile.getTag().getFirstArtwork().getBinaryData()));
+        } catch (NullPointerException e) {
+            return null;
         }
-
-        return null;
     }
 }

@@ -2,6 +2,7 @@ package com.satespace.soundmint.items.main.musicButtons;
 
 import com.satespace.soundmint.App;
 import com.satespace.soundmint.SourceImage;
+import com.satespace.soundmint.musix.track.ActiveTrackEnvironment;
 import javafx.event.ActionEvent;
 
 public class NextMusicButton extends AbsMusicButton {
@@ -12,10 +13,12 @@ public class NextMusicButton extends AbsMusicButton {
 
     @Override
     public void onClick(ActionEvent event) {
+        ActiveTrackEnvironment environment = App.STORAGE.activeTrackEnvironment();
         if (isAllowed()) {
-            App.STORAGE.activeTrackEnvironment().playNext();
+            environment.playNext();
         }
         this.updateState();
+        App.CONTROLLER.getSwitchStatusMusicButton().updateImage(!environment.isPlaying());
     }
 
     @Override

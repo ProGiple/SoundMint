@@ -51,4 +51,6 @@ public abstract class AbsMusicButton extends ImagedButton implements Clickable<A
         this.color = Color.web(theme.getHex());
         this.recoloredImage = Utils.reColor(this.imageView.getImage(), Color.WHITE, this.color);
     }
+
+
 }

@@ -14,11 +14,12 @@ public class App extends Application {
     public static final String TITLE = "SoundMint";
     public static Storage STORAGE;
     public static AppController CONTROLLER;
-
+    public static Stage STAGE;
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("view.fxml"));
+        STAGE = stage;
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("main/view.fxml"));
         stage.setMaximized(true);
         STORAGE = new Storage();
         Scene scene = new Scene(fxmlLoader.load(), stage.getMaxHeight(), stage.getMaxWidth());

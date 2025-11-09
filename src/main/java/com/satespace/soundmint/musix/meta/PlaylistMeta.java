@@ -1,7 +1,6 @@
-package com.satespace.soundmint.musix.collection;
+package com.satespace.soundmint.musix.meta;
 
 import com.satespace.soundmint.SourceImage;
-import com.satespace.soundmint.musix.meta.Meta;
 import javafx.scene.image.Image;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,5 +15,10 @@ public class PlaylistMeta implements Meta {
 //        int playlistsAmount = App.STORAGE.playlists().size();
         this.name = "Плейлист " + 1;
         this.artwork = SourceImage.PLAYLIST_DEFAULT_IMAGE.asImage();
+    }
+
+    public PlaylistMeta(String name, Image image) {
+        this.name = name;
+        this.artwork = image;
     }
 }

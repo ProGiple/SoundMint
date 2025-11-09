@@ -1,8 +1,7 @@
 package com.satespace.soundmint.musix.track;
 
 import com.satespace.soundmint.App;
-import com.satespace.soundmint.musix.TrackMeta;
-import com.satespace.soundmint.musix.collection.Playlist;
+import com.satespace.soundmint.musix.playlist.Playlist;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -16,24 +15,16 @@ public class ActiveTrackEnvironment {
     private MediaPlayer mediaPlayer;
     private Track activeTrack;
     private Playlist activePlaylist;
-    private Track nextTrack;
-    private Track previousTrack;
-    private boolean nowPlayed = false;
+
+
     public void play(Track track, Playlist playlist) {
         this.activeTrack = track;
         this.activePlaylist = playlist;
 
-        int activeTrackIndex = playlist.getTrackList().indexOf(activeTrack);
-        if (activeTrackIndex != 0) {
-            this.previousTrack = playlist.getTrackList().get(activeTrackIndex - 1);
-        }
-
-        if (activeTrackIndex != playlist.getTrackList().size() - 1) {
-            this.nextTrack = playlist.getTrackList().get(activeTrackIndex + 1);
-        }
 
         if (mediaPlayer != null) {
-            mediaPlayer.stop();
+            if (this.isPlaying())
+                mediaPlayer.stop();
             mediaPlayer.dispose();
         }
 
@@ -42,7 +33,7 @@ public class ActiveTrackEnvironment {
 
         App.CONTROLLER.loadLabels();
         mediaPlayer.currentTimeProperty().addListener((obs, oldTime, newTime) -> {
-            if (mediaPlayer.getStatus() != MediaPlayer.Status.DISPOSED) {
+            if (!this.isClear()) {
                 Duration total = mediaPlayer.getTotalDuration();
 
                 double progress;
@@ -50,50 +41,66 @@ public class ActiveTrackEnvironment {
                     progress = newTime.toMillis() / total.toMillis();
                     if (progress >= 0.9995) {
                         progress = -1;
-                        endHandler();
+                        onTrackEnd();
                     }
                 }
                 else progress = -1;
-                App.CONTROLLER.getTrackAudioBar().setProgress(progress, false);
+                App.CONTROLLER.getTrackAudioBar().setProgress(progress, false, mediaPlayer);
             }
         });
 
         mediaPlayer.play();
-        nowPlayed = true;
     }
 
-    public boolean play() {
-        if (mediaPlayer == null) return false;
-
-        mediaPlayer.play();
-        if (this.isNowPlayed()) {
-
+    public void resume() {
+        if (this.isPaused()) {
+            mediaPlayer.play();
         }
-
-        nowPlayed = true;
-        return true;
     }
 
     public void pause() {
         mediaPlayer.pause();
-        nowPlayed = false;
     }
 
+
     public void playNext() throws NoSuchElementException {
+        Track nextTrack = this.getNext();
         if (nextTrack == null) throw new NoSuchElementException();
         this.play(nextTrack, activePlaylist);
     }
 
     public void playPrevious() throws NoSuchElementException {
+        Track previousTrack = this.getPrevious();
         if (previousTrack == null) throw new NoSuchElementException();
         this.play(previousTrack, activePlaylist);
     }
 
-    public void endHandler() {
-        nowPlayed = false;
-        App.CONTROLLER.getSwitchStatusMusicButton().updateImage(false);
+    public Track getNext() {
+        return activePlaylist != null ? activePlaylist.nextTrack(activeTrack) : null;
+    }
+    public Track getPrevious() {
+        return activePlaylist != null ? activePlaylist.previousTrack(activeTrack) : null;
+    }
+
+
+    public void onTrackEnd() {
+//        App.CONTROLLER.getSwitchStatusMusicButton().updateImage(false);
         mediaPlayer.stop();
         mediaPlayer.dispose();
         App.CONTROLLER.loadLabels();
+        this.playNext();
+    }
+
+
+    public boolean isPlaying() {
+        return mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING);
+    }
+
+    public boolean isPaused() {
+        return mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PAUSED);
+    }
+
+    public boolean isClear() {
+        return mediaPlayer == null || mediaPlayer.getStatus().equals(MediaPlayer.Status.UNKNOWN) || mediaPlayer.getStatus().equals(MediaPlayer.Status.DISPOSED) || mediaPlayer.getStatus().equals(MediaPlayer.Status.STOPPED);
     }
 }

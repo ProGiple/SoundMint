@@ -1,9 +1,8 @@
 package com.satespace.soundmint.controllers;
 
 import com.satespace.soundmint.App;
-import com.satespace.soundmint.musix.collection.Playlist;
+import com.satespace.soundmint.musix.playlist.Playlist;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;

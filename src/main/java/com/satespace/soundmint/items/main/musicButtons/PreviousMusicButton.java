@@ -20,6 +20,6 @@ public class PreviousMusicButton extends AbsMusicButton {
 
     @Override
     protected boolean isAllowed() {
-        return App.STORAGE.activeTrackEnvironment().getPreviousTrack() != null;
+        return App.STORAGE.activeTrackEnvironment().getPrevious() != null;
     }
 }

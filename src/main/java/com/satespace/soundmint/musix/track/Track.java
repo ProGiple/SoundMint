@@ -1,6 +1,6 @@
 package com.satespace.soundmint.musix.track;
 
-import com.satespace.soundmint.musix.TrackMeta;
+import com.satespace.soundmint.musix.meta.TrackMeta;
 import com.satespace.soundmint.musix.artwork.ArtworkExtractor;
 import com.satespace.soundmint.musix.meta.MetaContainer;
 import javafx.scene.image.Image;

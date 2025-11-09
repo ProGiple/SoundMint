@@ -1,5 +1,6 @@
 package com.satespace.soundmint.musix;
 
+import com.satespace.soundmint.musix.meta.TrackMeta;
 import com.satespace.soundmint.musix.track.Track;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;

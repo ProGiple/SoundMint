@@ -10,9 +10,7 @@ import lombok.Getter;
 public class PlaylistPane extends CollectionPane {
     private final Playlist playlist;
     public PlaylistPane(Playlist playlist) {
-        super(playlist.getMetaObject().getArtwork() == null ?
-                SourceImage.PLAYLIST_DEFAULT_IMAGE.asImage() :
-                playlist.getMetaObject().getArtwork());
+        super(playlist.getMetaObject().getArtwork());
         this.playlist = playlist;
         this.getStyleClass().add("collection-pane");
     }
@@ -23,6 +21,5 @@ public class PlaylistPane extends CollectionPane {
 
     @Override
     public void onClick(MouseEvent event) {
-        System.out.println("Clicked");
     }
 }

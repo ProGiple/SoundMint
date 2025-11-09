@@ -9,6 +9,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -44,5 +45,11 @@ public class Utils {
         stackPane.setOnMouseEntered(e -> overlay.setOpacity(1));
         stackPane.setOnMouseExited(e -> overlay.setOpacity(0));
         return stackPane;
+    }
+
+    public String formatDuration(Duration duration) {
+        int minutes = (int) duration.toMinutes();
+        int seconds = (int) (duration.toSeconds() % 60);
+        return String.format("%d:%02d", minutes, seconds);
     }
 }

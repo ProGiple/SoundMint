@@ -4,7 +4,7 @@ import com.satespace.soundmint.App;
 import com.satespace.soundmint.SourceImage;
 import com.satespace.soundmint.items.abs.Clickable;
 import com.satespace.soundmint.items.abs.CollectionPane;
-import com.satespace.soundmint.musix.collection.Playlist;
+import com.satespace.soundmint.musix.playlist.Playlist;
 import com.satespace.soundmint.util.Utils;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;

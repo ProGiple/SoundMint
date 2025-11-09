@@ -4,6 +4,7 @@ import com.satespace.soundmint.App;
 import com.satespace.soundmint.Theme;
 import com.satespace.soundmint.items.abs.Clickable;
 import com.satespace.soundmint.items.abs.ThemeUpdatable;
+import com.satespace.soundmint.musix.track.ActiveTrackEnvironment;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
@@ -15,8 +16,7 @@ public class TrackAudioBar extends ProgressBar implements ThemeUpdatable, Clicka
         this.setOnMouseClicked(this::onClick);
     }
 
-    public void setProgress(double value, boolean updateTrack) {
-        MediaPlayer player = App.STORAGE.activeTrackEnvironment().getMediaPlayer();
+    public void setProgress(double value, boolean updateTrack, MediaPlayer player) {
         if (updateTrack && (player == null || player.getStatus() == MediaPlayer.Status.DISPOSED)) return;
 
         this.setProgress(value);
@@ -24,11 +24,13 @@ public class TrackAudioBar extends ProgressBar implements ThemeUpdatable, Clicka
 
         if (updateTrack) {
             if (value >= 0.998) {
-                App.STORAGE.activeTrackEnvironment().endHandler();
+                App.STORAGE.activeTrackEnvironment().onTrackEnd();
             }
             else player.seek(player.getTotalDuration().multiply(value));
         }
     }
+
+
 
     @Override
     public void theme(Theme theme) {
@@ -40,7 +42,10 @@ public class TrackAudioBar extends ProgressBar implements ThemeUpdatable, Clicka
 
     @Override
     public void onClick(MouseEvent event) {
-        double progress = event.getX() / this.widthProperty().get();
-        this.setProgress(progress, true);
+        ActiveTrackEnvironment environment = App.STORAGE.activeTrackEnvironment();
+        if (!environment.isClear()) {
+            double progress = event.getX() / this.widthProperty().get();
+            this.setProgress(progress, true, environment.getMediaPlayer());
+        }
     }
 }

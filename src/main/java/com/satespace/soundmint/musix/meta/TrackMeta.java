@@ -1,6 +1,5 @@
-package com.satespace.soundmint.musix;
+package com.satespace.soundmint.musix.meta;
 
-import com.satespace.soundmint.musix.meta.Meta;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,5 +1,6 @@
 package com.satespace.soundmint;
 
+import com.satespace.soundmint.controllers.AppController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;

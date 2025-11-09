@@ -1,4 +1,4 @@
-package com.satespace.soundmint.items;
+package com.satespace.soundmint.items.main;
 
 import javafx.scene.control.ScrollPane;
 

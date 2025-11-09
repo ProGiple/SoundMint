@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.satespace.soundmint.items.musicButtons.NextMusicButton?>
-<?import com.satespace.soundmint.items.musicButtons.PreviousMusicButton?>
-<?import com.satespace.soundmint.items.musicButtons.SwitchStatusMusicButton?>
-<?import com.satespace.soundmint.items.PlaylistBox?>
-<?import com.satespace.soundmint.items.PlaylistScroller?>
-<?import com.satespace.soundmint.items.TrackAudioBar?>
-<?import javafx.scene.control.Button?>
+<?import com.satespace.soundmint.items.main.musicButtons.NextMusicButton?>
+<?import com.satespace.soundmint.items.main.musicButtons.PreviousMusicButton?>
+<?import com.satespace.soundmint.items.main.musicButtons.SwitchStatusMusicButton?>
+<?import com.satespace.soundmint.items.main.PlaylistBox?>
+<?import com.satespace.soundmint.items.main.PlaylistScroller?>
+<?import com.satespace.soundmint.items.main.TrackAudioBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.control.Slider?>
+<?import com.satespace.soundmint.items.abs.MintLabel?>
+<?import com.satespace.soundmint.items.main.AudioNameLabel?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.satespace.soundmint.AppController"
+            fx:controller="com.satespace.soundmint.controllers.AppController"
             prefWidth="400"
             prefHeight="300"
             stylesheets="@style.css"
@@ -32,13 +32,13 @@
         </PlaylistScroller>
     </top>
     <center>
-        <HBox alignment="CENTER" spacing="20">
+        <HBox alignment="CENTER" spacing="40">
             <StackPane>
                 <Circle radius="100" styleClass="track-circle"/>
             </StackPane>
 
             <VBox alignment="CENTER" spacing="20">
-                <Button fx:id="favoritesButton" text="Избранное" styleClass="favorites-button"/>
+                <!-- <Button fx:id="favoritesButton" text="Избранное" styleClass="favorites-button"/> -->
 
                 <HBox alignment="CENTER" spacing="30">
                     <PreviousMusicButton fx:id="previousMusicButton" />
@@ -47,17 +47,15 @@
                 </HBox>
 
                 <VBox alignment="CENTER" spacing="7">
-                    <HBox alignment="CENTER" spacing="5">
-                        <Label fx:id="trackTitle" text="Название" styleClass="track-label" />
-                        <Label fx:id="trackArtist" text="Исполнитель" styleClass="track-label" />
+                    <HBox alignment="CENTER" spacing="6">
+                        <AudioNameLabel fx:id="trackTitle" styleClass="track-label" />
+                        <Label styleClass="track-label" text="•" />
+                        <Label fx:id="trackArtist" styleClass="track-label" />
                     </HBox>
-                    <StackPane fx:id="sliderContainer" alignment="CENTER_LEFT" prefWidth="300">
-                        <Region fx:id="fillBar" styleClass="slider-fill"/>
-                        <TrackAudioBar fx:id="trackAudioBar"
-                                       prefWidth="250"
-                                       max="1"
-                                       styleClass="track-progress"/>
-                    </StackPane>
+                    <TrackAudioBar
+                            fx:id="trackAudioBar"
+                            prefHeight="6"
+                            styleClass="track-audio-bar" />
                 </VBox>
             </VBox>
         </HBox>

@@ -13,33 +13,35 @@ import java.io.File;
 
 @UtilityClass
 public class TrackLoader {
-
     @SneakyThrows
     public Track loadTrack(File file) {
-
         TrackMeta meta = new TrackMeta(file);
 
         AudioFile audioFile = AudioFileIO.read(file);
         if (audioFile != null) {
             Tag audioTag = audioFile.getTag();
-            AudioHeader header = audioFile.getAudioHeader();
 
+            AudioHeader header = audioFile.getAudioHeader();
             double duration = header.getPreciseTrackLength();
 
             extractMetadata(audioTag, meta);
-
             return new Track(meta, file, duration);
         }
+
         return null;
     }
 
-
-
     private void extractMetadata(Tag tag, TrackMeta info) {
+        String title = tag.getFirst(FieldKey.TITLE);
+        if (!title.isEmpty()) info.setName(title);
 
-        info.setName(tag.getFirst(FieldKey.TITLE));
-        info.setArtist(tag.getFirst(FieldKey.ARTIST));
-        info.setAlbum(tag.getFirst(FieldKey.ALBUM));
-        info.setGenre(tag.getFirst(FieldKey.GENRE));
+        String artist = tag.getFirst(FieldKey.ARTIST);
+        if (!artist.isEmpty()) info.setArtist(artist);
+
+        String album = tag.getFirst(FieldKey.ALBUM);
+        if (!album.isEmpty()) info.setAlbum(album);
+
+        String genre = tag.getFirst(FieldKey.GENRE);
+        if (!genre.isEmpty()) info.setGenre(genre);
     }
 }

@@ -16,10 +16,8 @@ import java.util.Objects;
 public class Storage {
     private final List<Playlist> playlists = new ArrayList<>();
     private final Favourites favourites = new Favourites();
-
     private final ActiveTrackEnvironment activeTrackEnvironment = new ActiveTrackEnvironment();
-
-
+    private Theme theme = Theme.ORANGE;
     public Storage() {
         playlists.add(new Playlist());
         String userHome = System.getProperty("user.home");
@@ -29,5 +27,4 @@ public class Storage {
                 playlists.getFirst().getTrackList().add(TrackLoader.loadTrack(file));
         }
     }
-
 }

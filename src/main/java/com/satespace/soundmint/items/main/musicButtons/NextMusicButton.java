@@ -1,4 +1,4 @@
-package com.satespace.soundmint.items.musicButtons;
+package com.satespace.soundmint.items.main.musicButtons;
 
 import com.satespace.soundmint.App;
 import com.satespace.soundmint.SourceImage;
@@ -7,15 +7,19 @@ import javafx.event.ActionEvent;
 public class NextMusicButton extends AbsMusicButton {
     public NextMusicButton() {
         super(SourceImage.NEXT_TRACK_BUTTON);
+        this.updateState();
     }
 
     @Override
-    protected void onClick(ActionEvent event) {
-        App.STORAGE.activeTrackEnvironment().playNext();
+    public void onClick(ActionEvent event) {
+        if (isAllowed()) {
+            App.STORAGE.activeTrackEnvironment().playNext();
+        }
+        this.updateState();
     }
 
     @Override
     protected boolean isAllowed() {
-        return false;
+        return App.STORAGE.activeTrackEnvironment().getNextTrack() != null;
     }
 }

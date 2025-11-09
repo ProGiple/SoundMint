@@ -1,17 +1,18 @@
-package com.satespace.soundmint.items;
+package com.satespace.soundmint.items.main;
 
 import com.satespace.soundmint.App;
 import com.satespace.soundmint.SourceImage;
+import com.satespace.soundmint.items.abs.Clickable;
+import com.satespace.soundmint.items.abs.CollectionPane;
 import com.satespace.soundmint.musix.collection.Playlist;
+import com.satespace.soundmint.util.Utils;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -19,49 +20,28 @@ import javafx.util.Duration;
 
 import java.util.List;
 
-public class PlayListCreatePane extends Pane {
+public class PlayListCreatePane extends Pane implements Clickable<MouseEvent> {
     public static final double IMAGE_OPACITY = 0.2;
     public static final int IMAGE_FIT_HEIGHT = 50;
-    public static final double ON_HOVER_PANES_OPACITY = 0.75;
+    public static final double ON_HOVER_PANES_OPACITY = 0.65;
     public static final int ON_HOVER_PANES_PAUSE_MILLIS = 50;
 
     private boolean isHovered = false;
     public PlayListCreatePane() {
-        this.getStyleClass().addAll("playlist-base-pane", "create-playlist-pane");
+        this.getStyleClass().addAll("collection-base-pane", "create-playlist-pane");
 
         Image image = SourceImage.CREATE_PLAYLIST_BUTTON.asImage();
-        ImageView imageView = new ImageView(image);
-        imageView.setOpacity(IMAGE_OPACITY);
-        imageView.setPreserveRatio(true);
-        imageView.setFitHeight(IMAGE_FIT_HEIGHT);
-
-        StackPane stackPane = new StackPane(imageView);
-        stackPane.prefHeightProperty().bind(this.heightProperty());
-        stackPane.prefWidthProperty().bind(this.widthProperty());
-        stackPane.setAlignment(Pos.CENTER);
+        StackPane stackPane = Utils.setNodeImage(this, image, IMAGE_OPACITY, IMAGE_FIT_HEIGHT);
         this.getChildren().add(stackPane);
 
         HBox.setMargin(this, new Insets(0, 20, 0, 10));
-        this.setOnMouseClicked(e -> {
-            Playlist playlist = new Playlist();
-            App.STORAGE.playlists().add(playlist);
-
-            PlaylistPane pane = App.CONTROLLER.createPlaylistPane(playlist);
-            pane.setScaleX(0);
-            pane.setScaleY(0);
-
-            ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(225), pane);
-            scaleTransition.setToX(1);
-            scaleTransition.setToY(1);
-            scaleTransition.play();
-
-            this.playOpacityAnimation(pane, 0);
-        });
+        this.setOnMouseClicked(this::onClick);
 
         this.setOnMouseEntered(e -> {
             isHovered = true;
             this.playOpacityAnimation();
         });
+
         this.setOnMouseExited(e -> {
             isHovered = false;
             this.playOpacityAnimation();
@@ -69,7 +49,7 @@ public class PlayListCreatePane extends Pane {
     }
 
     private void playOpacityAnimation() {
-        List<PlaylistPane> list = App.CONTROLLER.getTopPlayListBlock().getPanes();
+        List<CollectionPane> list = App.CONTROLLER.getTopPlayListBlock().getPanes();
         for (int i = 0; i < list.size(); i++) {
             Node node = list.get(i);
             this.playOpacityAnimation(node, ON_HOVER_PANES_PAUSE_MILLIS * i);
@@ -86,5 +66,22 @@ public class PlayListCreatePane extends Pane {
             fadeTransition.play();
         });
         delay.play();
+    }
+
+    @Override
+    public void onClick(MouseEvent event) {
+        Playlist playlist = new Playlist();
+        App.STORAGE.playlists().add(playlist);
+
+        PlaylistPane pane = App.CONTROLLER.createPlaylistPane(playlist);
+        pane.setScaleX(0);
+        pane.setScaleY(0);
+
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(225), pane);
+        scaleTransition.setToX(1);
+        scaleTransition.setToY(1);
+        scaleTransition.play();
+
+        this.playOpacityAnimation(pane, 0);
     }
 }

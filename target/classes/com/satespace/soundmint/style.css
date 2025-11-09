@@ -19,7 +19,7 @@
     -fx-background-color: #141414;
 }
 
-.playlist-base-pane {
+.collection-base-pane {
     -fx-min-height: 90px;
     -fx-min-width: 90px;
     -fx-pref-height: 90px;
@@ -27,7 +27,7 @@
     -fx-background-radius: 10px;
 }
 
-.playlist-pane {
+.collection-pane {
     -fx-background-color: #262626;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 20, 0.4, 0, 0);
 }
@@ -37,16 +37,27 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 20, 0.4, 0, 0);
 }
 
-.track-progress .thumb {
-    -fx-opacity: 0;
-}
-
-.track-progress {
-    -fx-background-color: red;
-    -fx-pref-height: 6;
+.track-audio-bar .bar {
     -fx-background-radius: 5;
+    -fx-pref-width: 250;
+    -fx-background-insets: 0;
 }
 
-.track-progress .track {
+.track-audio-bar .track {
+    -fx-background-color: #262626;
+    -fx-background-radius: 5;
+    -fx-background-insets: 0;
+}
+
+.track-audio-bar {
     -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+
+.track-label {
+    -fx-text-fill: white;
 }

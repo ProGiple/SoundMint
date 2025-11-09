@@ -22,4 +22,10 @@ public class NextMusicButton extends AbsMusicButton {
     protected boolean isAllowed() {
         return App.STORAGE.activeTrackEnvironment().getNext() != null;
     }
+
+    @Override
+    public void updateState() {
+        super.updateState();
+        this.replaceImage(SourceImage.NEXT_TRACK_BUTTON, IMAGE_SIZE);
+    }
 }

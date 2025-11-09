@@ -18,7 +18,7 @@ public class Storage {
     private final List<Playlist> playlists = new ArrayList<>();
     private final Playlist favourites = new Playlist(new PlaylistMeta("Избранное", SourceImage.FAVOURITES_LIST_IMAGE.asImage()), PlaybackMode.SEQUENTIAL);
     private final ActiveTrackEnvironment activeTrackEnvironment = new ActiveTrackEnvironment();
-    private final Theme theme = Theme.ORANGE;
+    private final Theme theme = Theme.PRIMARY;
     public Storage() {
         playlists.add(new Playlist());
         String userHome = System.getProperty("user.home");

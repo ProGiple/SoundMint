@@ -1,6 +1,5 @@
 package com.satespace.soundmint.items.main.musicButtons;
 
-import com.satespace.soundmint.App;
 import com.satespace.soundmint.SourceImage;
 import com.satespace.soundmint.Theme;
 import com.satespace.soundmint.items.abs.Clickable;
@@ -9,16 +8,31 @@ import com.satespace.soundmint.items.abs.ThemeUpdatable;
 import com.satespace.soundmint.util.Utils;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import lombok.Setter;
 
-public abstract class AbsMusicButton extends ImagedButton implements Clickable<ActionEvent> {
-    public final static int IMAGE_SIZE = 16;
+@Setter
+public abstract class AbsMusicButton extends ImagedButton implements Clickable<ActionEvent>, ThemeUpdatable {
+    public static final int IMAGE_SIZE = 16;
     public static final double IN_DISABLED_OPACITY = 0.3;
+
+    private Color color;
+    private Image recoloredImage;
     public AbsMusicButton(SourceImage sourceImage) {
         super(sourceImage, IMAGE_SIZE);
         this.setOnAction(this::onClick);
+        this.setOnMouseExited(e -> {
+            this.setGraphic(imageView);
+        });
+        this.setOnMouseEntered(e -> {
+            ImageView imageView = new ImageView(this.recoloredImage);
+            imageView.setFitHeight(IMAGE_SIZE);
+            imageView.setFitWidth(IMAGE_SIZE);
+            this.setGraphic(imageView);
+        });
     }
 
     protected abstract boolean isAllowed();
@@ -32,12 +46,9 @@ public abstract class AbsMusicButton extends ImagedButton implements Clickable<A
         fadeTransition.play();
     }
 
-    public ImageView replaceImage(SourceImage sourceImage, int size) {
-        ImageView imageView = super.replaceImage(sourceImage, size);
-        if (!this.isAllowed()) return imageView;
-
-        Color color = Color.web(App.STORAGE.theme().getHex());
-        this.setGraphic(Utils.hoverRecolor(this.imageView, color));
-        return imageView;
+    @Override
+    public void theme(Theme theme) {
+        this.color = Color.web(theme.getHex());
+        this.recoloredImage = Utils.reColor(this.imageView.getImage(), Color.WHITE, this.color);
     }
 }

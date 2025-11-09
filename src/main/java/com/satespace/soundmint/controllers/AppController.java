@@ -28,6 +28,8 @@ public class AppController extends Controller {
     @FXML protected TrackAudioBar trackAudioBar;
     @FXML protected Label currentTimeLabel;
     @FXML protected Label totalTimeLabel;
+    @FXML protected AudioVolumeBar audioVolumeBar;
+    @FXML protected Label audioVolumeLabel;
 
     public void initialize() {
         this.loadLabels();

@@ -32,24 +32,37 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 20, 0.4, 0, 0);
 }
 
-.create-playlist-pane {
+.mini-collection-base-pane {
     -fx-background-color: #272727;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 20, 0.4, 0, 0);
+    -fx-min-height: 40px;
+    -fx-min-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-pref-width: 40px;
+    -fx-background-radius: 10px;
 }
 
-.track-audio-bar .bar {
+.create-playlist-pane {
+
+}
+
+.settings-button {
+
+}
+
+.track-bar .bar {
     -fx-background-radius: 5;
     -fx-pref-width: 250;
     -fx-background-insets: 0;
 }
 
-.track-audio-bar .track {
+.track-bar .track {
     -fx-background-color: #262626;
     -fx-background-radius: 5;
     -fx-background-insets: 0;
 }
 
-.track-audio-bar {
+.track-bar {
     -fx-background-color: transparent;
     -fx-padding: 0;
     -fx-border-width: 0;
@@ -63,5 +76,9 @@
 }
 
 .track-duration-label {
+    -fx-text-fill: #757575;
+}
+
+.track-volume-label {
     -fx-text-fill: #757575;
 }

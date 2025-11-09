@@ -22,19 +22,18 @@ import java.util.List;
 
 public class PlayListCreatePane extends Pane implements Clickable<MouseEvent> {
     public static final double IMAGE_OPACITY = 0.2;
-    public static final int IMAGE_FIT_HEIGHT = 50;
+    public static final int IMAGE_FIT_HEIGHT = 25;
     public static final double ON_HOVER_PANES_OPACITY = 0.65;
     public static final int ON_HOVER_PANES_PAUSE_MILLIS = 50;
 
     private boolean isHovered = false;
     public PlayListCreatePane() {
-        this.getStyleClass().addAll("collection-base-pane", "create-playlist-pane");
+        this.getStyleClass().addAll("mini-collection-base-pane", "create-playlist-pane");
 
         Image image = SourceImage.CREATE_PLAYLIST_BUTTON.asImage();
         StackPane stackPane = Utils.setNodeImage(this, image, IMAGE_OPACITY, IMAGE_FIT_HEIGHT);
         this.getChildren().add(stackPane);
 
-        HBox.setMargin(this, new Insets(0, 20, 0, 10));
         this.setOnMouseClicked(this::onClick);
 
         this.setOnMouseEntered(e -> {

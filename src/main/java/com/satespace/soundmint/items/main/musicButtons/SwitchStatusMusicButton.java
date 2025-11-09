@@ -26,6 +26,8 @@ public class SwitchStatusMusicButton extends AbsMusicButton {
             environment.resume();
         }
 
+        App.CONTROLLER.getNextMusicButton().updateState();
+        App.CONTROLLER.getPreviousMusicButton().updateState();
         this.updateImage(!environment.isPlaying());
     }
 

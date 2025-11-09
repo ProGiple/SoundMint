@@ -13,6 +13,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import lombok.Getter;
 
 @Getter
@@ -48,20 +49,28 @@ public class AppController extends Controller {
 
         String artist;
         String name;
+        String currentTime;
+        String totalTime;
         if (environment.getActiveTrack() != null &&
                 environment.getMediaPlayer() != null &&
                 environment.getMediaPlayer().getStatus() != MediaPlayer.Status.DISPOSED) {
             TrackMeta meta = environment.getActiveTrack().getMetaObject();
             artist = meta.getArtist();
             name = meta.getName();
+            currentTime = "0:00";
+            totalTime = Utils.formatDuration(Duration.seconds(environment.getActiveTrack().getDuration()));
         }
         else {
             artist = "Неизвестный исполнитель";
             name = "Неизвестное название";
+            currentTime = "--:--";
+            totalTime = "--:--";
         }
 
         trackArtist.setText(Utils.cutText(artist, 18));
         trackTitle.setText(Utils.cutText(name, 18));
         trackTitle.setTooltip((String) null);
+        currentTimeLabel.setText(currentTime);
+        totalTimeLabel.setText(totalTime);
     }
 }

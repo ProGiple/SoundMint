@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -26,7 +27,7 @@ public class Playlist extends MetaContainer<PlaylistMeta> {
         this.trackList = new ArrayList<>();
     }
 
-    public Track nextTrack(Track track) {
+    public Track nextTrack(Track track, PlaybackMode playbackMode) {
         int currentIndex = trackList.indexOf(track);
 
         if (currentIndex != trackList.size() - 1) {
@@ -35,13 +36,46 @@ public class Playlist extends MetaContainer<PlaylistMeta> {
 
     }
 
-    public Track previousTrack(Track track) {
+    public Track previousTrack(Track track, PlaybackMode playbackMode) {
+        Track nextTrack = null;
+
         int currentIndex = trackList.indexOf(track);
 
-        if (currentIndex != 0) {
-            return trackList.get(currentIndex - 1);
-        } else return null;
+        switch (playbackMode) {
+            case SEQUENTIAL:
+                if (currentIndex < trackList.size() - 1) {
+                    nextTrack = trackList.get(currentIndex + 1);
+                }
+                break;
 
+            case REPEAT_ALL:
+                nextTrack = trackList.get((currentIndex + 1) % trackList.size());
+                break;
+
+            case REPEAT_ONE:
+                // Остаемся на текущем треке
+                break;
+
+            case SHUFFLE:
+                List<Track> copy = new ArrayList<>(trackList);
+
+
+                copy.addAll(trackList);
+                Collections.shuffle(copy);
+                currentIndex = copy.indexOf(track);
+
+
+                if (currentIndex < trackList.size() - 1) {
+                    nextTrack = trackList.get(currentIndex + 1);
+                } else {
+                    // Конец перемешанного плейлиста - перемешиваем заново
+                    Collections.shuffle(trackList);
+                    nextTrack = trackList.getFirst();
+                }
+                break;
+        }
+
+        return nextTrack;
     }
 
     public void addTrack(Track track) {

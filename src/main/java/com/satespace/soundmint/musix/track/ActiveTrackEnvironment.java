@@ -1,6 +1,7 @@
 package com.satespace.soundmint.musix.track;
 
 import com.satespace.soundmint.App;
+import com.satespace.soundmint.musix.playlist.PlaybackMode;
 import com.satespace.soundmint.musix.playlist.Playlist;
 import com.satespace.soundmint.util.Utils;
 import javafx.scene.media.Media;
@@ -9,13 +10,22 @@ import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
+import java.util.Queue;
 
 @Getter @Setter
 public class ActiveTrackEnvironment {
     private MediaPlayer mediaPlayer;
     private Track activeTrack;
+    private final PlaybackMode playbackMode;
+    private final Queue<Track> playbackQueue;
     private Playlist activePlaylist;
+
+    public ActiveTrackEnvironment() {
+        this.playbackMode = PlaybackMode.SEQUENTIAL;
+        this.playbackQueue = new LinkedList<>();
+    }
 
     public void play(Track track, Playlist playlist) {
         this.activeTrack = track;
@@ -78,10 +88,10 @@ public class ActiveTrackEnvironment {
     }
 
     public Track getNext() {
-        return activePlaylist != null ? activePlaylist.nextTrack(activeTrack) : null;
+        return activePlaylist != null ? activePlaylist.nextTrack(activeTrack, playbackMode) : null;
     }
     public Track getPrevious() {
-        return activePlaylist != null ? activePlaylist.previousTrack(activeTrack) : null;
+        return activePlaylist != null ? activePlaylist.previousTrack(activeTrack, playbackMode) : null;
     }
 
 

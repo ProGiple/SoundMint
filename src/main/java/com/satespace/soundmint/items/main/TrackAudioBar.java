@@ -30,8 +30,6 @@ public class TrackAudioBar extends ProgressBar implements ThemeUpdatable, Clicka
         }
     }
 
-
-
     @Override
     public void theme(Theme theme) {
         Region region = (Region) this.lookup(".bar");

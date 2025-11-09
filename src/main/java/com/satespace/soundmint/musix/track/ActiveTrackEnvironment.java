@@ -2,6 +2,7 @@ package com.satespace.soundmint.musix.track;
 
 import com.satespace.soundmint.App;
 import com.satespace.soundmint.musix.playlist.Playlist;
+import com.satespace.soundmint.util.Utils;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -15,7 +16,6 @@ public class ActiveTrackEnvironment {
     private MediaPlayer mediaPlayer;
     private Track activeTrack;
     private Playlist activePlaylist;
-
 
     public void play(Track track, Playlist playlist) {
         this.activeTrack = track;
@@ -45,6 +45,8 @@ public class ActiveTrackEnvironment {
                     }
                 }
                 else progress = -1;
+
+                App.CONTROLLER.getCurrentTimeLabel().setText(Utils.formatDuration(newTime));
                 App.CONTROLLER.getTrackAudioBar().setProgress(progress, false, mediaPlayer);
             }
         });
@@ -84,11 +86,15 @@ public class ActiveTrackEnvironment {
 
 
     public void onTrackEnd() {
-//        App.CONTROLLER.getSwitchStatusMusicButton().updateImage(false);
         mediaPlayer.stop();
         mediaPlayer.dispose();
         App.CONTROLLER.loadLabels();
-        this.playNext();
+
+        try {
+            this.playNext();
+        } catch (NoSuchElementException e) {
+            App.CONTROLLER.getSwitchStatusMusicButton().updateImage(false);
+        }
     }
 
 

@@ -1,6 +1,5 @@
 package com.satespace.soundmint.util;
 
-import com.satespace.soundmint.Theme;
 import javafx.geometry.Pos;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;

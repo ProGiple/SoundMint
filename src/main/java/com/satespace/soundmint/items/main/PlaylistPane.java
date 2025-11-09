@@ -1,6 +1,5 @@
 package com.satespace.soundmint.items.main;
 
-import com.satespace.soundmint.SourceImage;
 import com.satespace.soundmint.items.abs.CollectionPane;
 import com.satespace.soundmint.musix.playlist.Playlist;
 import javafx.scene.input.MouseEvent;

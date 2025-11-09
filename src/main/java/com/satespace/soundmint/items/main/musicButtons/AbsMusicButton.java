@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public abstract class AbsMusicButton extends ImagedButton implements Clickable<ActionEvent> {
-    public final static int IMAGE_SIZE = 24;
+    public final static int IMAGE_SIZE = 16;
     public static final double IN_DISABLED_OPACITY = 0.3;
     public AbsMusicButton(SourceImage sourceImage) {
         super(sourceImage, IMAGE_SIZE);

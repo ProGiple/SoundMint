@@ -61,3 +61,7 @@
 .track-label {
     -fx-text-fill: white;
 }
+
+.track-duration-label {
+    -fx-text-fill: #757575;
+}

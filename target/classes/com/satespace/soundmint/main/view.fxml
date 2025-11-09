@@ -55,6 +55,11 @@
                             fx:id="trackAudioBar"
                             prefHeight="6"
                             styleClass="track-audio-bar" />
+                    <HBox alignment="CENTER" spacing="10">
+                        <Label fx:id="currentTimeLabel" text="0:00" styleClass="track-duration-label" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="totalTimeLabel" text="99:99" styleClass="track-duration-label" />
+                    </HBox>
                 </VBox>
             </VBox>
         </HBox>

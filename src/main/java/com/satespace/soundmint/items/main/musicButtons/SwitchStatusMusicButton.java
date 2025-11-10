@@ -21,7 +21,7 @@ public class SwitchStatusMusicButton extends AbsMusicButton {
         } else if (environment.isClear()) {
             Playlist playlist = App.STORAGE.playlists().getFirst();
             Track track = playlist.getTrackList().getFirst();
-            environment.play(track, playlist);
+            environment.play(track, playlist, true);
         } else {
             environment.resume();
         }

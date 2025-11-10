@@ -16,6 +16,8 @@ public class PreviousMusicButton extends AbsMusicButton {
         ActiveTrackEnvironment environment = App.STORAGE.activeTrackEnvironment();
         if (isAllowed()) {
             environment.playPrevious();
+            System.out.println(environment.getPlaybackQueue());
+            System.out.println(environment.getPlaybackHistory());
         }
         this.updateState();
         App.CONTROLLER.getSwitchStatusMusicButton().updateImage(!environment.isPlaying());

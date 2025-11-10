@@ -1,8 +1,8 @@
 package com.satespace.soundmint.musix.track;
 
-import com.satespace.soundmint.musix.meta.TrackMeta;
 import com.satespace.soundmint.musix.artwork.ArtworkExtractor;
 import com.satespace.soundmint.musix.meta.MetaContainer;
+import com.satespace.soundmint.musix.meta.TrackMeta;
 import javafx.scene.image.Image;
 import lombok.Getter;
 
@@ -19,5 +19,12 @@ public class Track extends MetaContainer<TrackMeta> {
         this.file = file;
         this.duration = duration;
         this.artwork = ArtworkExtractor.extractArtwork(file);
+    }
+
+    @Override
+    public String toString() {
+        return "Track{" +
+                "name=" + this.getMetaObject().getName() +
+                '}';
     }
 }

@@ -19,28 +19,34 @@ public class ActiveTrackEnvironment {
     private Track activeTrack;
     private Playlist activePlaylist;
 
-    // Очередь воспроизведения
     private Queue<Track> playbackQueue;
-    // История воспроизведения для навигации назад
     private Deque<Track> playbackHistory;
-    // Флаг, указывающий, что сейчас играет трек из очереди
-    private boolean isPlayingFromQueue;
 
     public ActiveTrackEnvironment() {
         this.playbackMode = PlaybackMode.SEQUENTIAL;
         this.playbackQueue = new LinkedList<>();
         this.playbackHistory = new ArrayDeque<>();
-        this.isPlayingFromQueue = false;
     }
 
-    public void play(Track track, Playlist playlist) {
-        if (this.activeTrack != null) {
-            playbackHistory.push(activeTrack);
+
+    /**
+     * Запуск трека
+     * @param track - новый трек для проигрывания
+     * @param playlist - плейлист, из которого был запущен трек
+     */
+    public void play(Track track, Playlist playlist, boolean pushToHistory) {
+        // Сохраняем текущий трек в историю перед сменой
+        if (this.activeTrack != null && !this.activeTrack.equals(track)) {
+            if (pushToHistory)
+                playbackHistory.push(this.activeTrack);
+            // Ограничиваем размер истории
+            if (playbackHistory.size() > 100) {
+                playbackHistory.removeLast();
+            }
         }
 
         this.activeTrack = track;
         this.activePlaylist = playlist;
-        this.isPlayingFromQueue = false;
 
         // Перестраиваем очередь на основе нового плейлиста и трека
         this.rebuildQueue();
@@ -56,7 +62,7 @@ public class ActiveTrackEnvironment {
         this.mediaPlayer = new MediaPlayer(media);
 
         App.CONTROLLER.loadLabels();
-        this.setupMediaPlayerListeners();
+        setupMediaPlayerListeners();
         mediaPlayer.play();
     }
 
@@ -81,40 +87,41 @@ public class ActiveTrackEnvironment {
         });
     }
 
+    public void onNextClicked() {
+        Track nextTrack = this.peekNext();
+    }
+
     /**
      * Перестраивает очередь воспроизведения на основе активного плейлиста и текущего трека
      */
     private void rebuildQueue() {
         playbackQueue.clear();
 
-        if (activePlaylist == null || activeTrack == null) {
-            return;
-        }
+        if (activePlaylist == null || activeTrack == null) return;
+
 
         List<Track> tracks = activePlaylist.getTrackList();
         int currentIndex = tracks.indexOf(activeTrack);
 
-        if (currentIndex == -1) {
-            return;
-        }
+        if (currentIndex == -1) return;
+
 
         switch (activePlaylist.getPlaybackMode()) {
             case SEQUENTIAL:
+                // Добавляем все треки после текущего
                 for (int i = currentIndex + 1; i < tracks.size(); i++) {
                     playbackQueue.offer(tracks.get(i));
                 }
                 break;
 
             case REPEAT_ALL:
+                // Добавляем все треки после текущего, затем все до текущего
                 for (int i = currentIndex + 1; i < tracks.size(); i++) {
                     playbackQueue.offer(tracks.get(i));
                 }
                 for (int i = 0; i <= currentIndex; i++) {
                     playbackQueue.offer(tracks.get(i));
                 }
-                break;
-
-            case REPEAT_ONE:
                 break;
 
             case SHUFFLE:
@@ -137,34 +144,98 @@ public class ActiveTrackEnvironment {
     }
 
     public void playNext() throws NoSuchElementException {
-        Track nextTrack = this.getNext();
+        Track nextTrack = this.getAndRemoveNext();
         if (nextTrack == null) throw new NoSuchElementException();
-        this.play(nextTrack, activePlaylist);
+        this.play(nextTrack, activePlaylist, true);
     }
 
     public void playPrevious() throws NoSuchElementException {
-        Track previousTrack = this.getPrevious();
+        Track previousTrack = getAndRemovePrevious();
         if (previousTrack == null) throw new NoSuchElementException();
-        this.play(previousTrack, activePlaylist);
+        this.play(previousTrack, activePlaylist, false);
     }
 
-    public Track getNext() {
+    /**
+     * Получает и удаляет следующий трек из соответствующей коллекции
+     */
+    private Track getAndRemoveNext() {
+        // Сначала проверяем очередь
         if (!playbackQueue.isEmpty()) {
-            Track next = playbackQueue.poll();
-            isPlayingFromQueue = true;
-            return next;
+            return playbackQueue.poll();
         }
 
-        isPlayingFromQueue = false;
+        // Если очередь пуста, получаем следующий из плейлиста
+        Track nextTrack = this.calculateNextTrack();
+        if (nextTrack != null && activePlaylist != null) {
+            // Если следующий трек из плейлиста, добавляем текущий в историю
+            if (activeTrack != null) {
+                playbackHistory.push(activeTrack);
+            }
+        }
+
+        return nextTrack;
+    }
+
+    /**
+     * Получает и удаляет предыдущий трек из соответствующей коллекции
+     */
+    private Track getAndRemovePrevious() {
+        // Сначала проверяем историю
+        if (!playbackHistory.isEmpty()) {
+            Track previous = playbackHistory.pop();
+
+            if (activeTrack != null) {
+                Queue<Track> tempQueue = new LinkedList<>();
+                tempQueue.offer(activeTrack);
+                tempQueue.addAll(playbackQueue);
+                playbackQueue.clear();
+                playbackQueue.addAll(tempQueue);
+            }
+
+            return previous;
+        }
+
+        Track previousTrack = calculatePreviousTrack();
+        if (previousTrack != null && activeTrack != null) {
+            Queue<Track> tempQueue = new LinkedList<>();
+            tempQueue.offer(activeTrack);
+            tempQueue.addAll(playbackQueue);
+            playbackQueue.clear();
+            playbackQueue.addAll(tempQueue);
+        }
+
+        return previousTrack;
+    }
+
+    /**
+     * Просмотр следующего трека без изменения состояния
+     */
+    public Track peekNext() {
+        if (!playbackQueue.isEmpty()) {
+            return playbackQueue.peek();
+        }
         return calculateNextTrack();
     }
 
-    public Track getPrevious() {
+    /**
+     * Просмотр предыдущего трека без изменения состояния
+     */
+    public Track peekPrevious() {
         if (!playbackHistory.isEmpty()) {
-            return playbackHistory.pop();
+            return playbackHistory.peek();
         }
-
         return calculatePreviousTrack();
+    }
+
+    /**
+     * Старые методы для обратной совместимости
+     */
+    public Track getNext() {
+        return peekNext();
+    }
+
+    public Track getPrevious() {
+        return peekPrevious();
     }
 
     /**
@@ -182,33 +253,29 @@ public class ActiveTrackEnvironment {
             return null;
         }
 
-        switch (activePlaylist.getPlaybackMode()) {
-            case SEQUENTIAL:
+        return switch (activePlaylist.getPlaybackMode()) {
+            case SEQUENTIAL -> {
                 if (currentIndex < tracks.size() - 1) {
-                    return tracks.get(currentIndex + 1);
+                    yield tracks.get(currentIndex + 1);
                 }
-                return null;
-
-            case REPEAT_ALL:
+                yield null;
+            }
+            case REPEAT_ALL -> {
                 int nextIndex = (currentIndex + 1) % tracks.size();
-                return tracks.get(nextIndex);
-
-            case REPEAT_ONE:
-                return activeTrack;
-
-            case SHUFFLE:
+                yield tracks.get(nextIndex);
+            }
+            case REPEAT_ONE -> activeTrack;
+            case SHUFFLE -> {
                 if (tracks.size() > 1) {
-                    // Исключаем текущий трек и выбираем случайный
                     List<Track> availableTracks = new ArrayList<>(tracks);
                     availableTracks.remove(activeTrack);
+                    if (availableTracks.isEmpty()) yield null;
                     Random random = new Random();
-                    return availableTracks.get(random.nextInt(availableTracks.size()));
+                    yield availableTracks.get(random.nextInt(availableTracks.size()));
                 }
-                return null;
-
-            default:
-                return null;
-        }
+                yield null;
+            }
+        };
     }
 
     /**
@@ -242,10 +309,26 @@ public class ActiveTrackEnvironment {
     }
 
     /**
+     * Обрабатывает завершение трека и автоматический переход к следующему
+     */
+    public void onTrackEnd() {
+
+        mediaPlayer.stop();
+        mediaPlayer.dispose();
+        App.CONTROLLER.loadLabels();
+
+        try {
+            this.playNext();
+        } catch (NoSuchElementException e) {
+            App.CONTROLLER.getSwitchStatusMusicButton().updateImage(false);
+        }
+    }
+
+    /**
      * Добавляет трек в очередь воспроизведения
      */
     public void addToQueue(Track track) {
-        if (track != null) {
+        if (track != null && !track.equals(activeTrack)) {
             playbackQueue.offer(track);
         }
     }
@@ -254,8 +337,7 @@ public class ActiveTrackEnvironment {
      * Добавляет трек следующим в очереди
      */
     public void addNextInQueue(Track track) {
-        if (track != null) {
-            // Создаем временную очередь для вставки трека следующим
+        if (track != null && !track.equals(activeTrack)) {
             Queue<Track> tempQueue = new LinkedList<>();
             tempQueue.offer(track);
             tempQueue.addAll(playbackQueue);
@@ -265,11 +347,26 @@ public class ActiveTrackEnvironment {
     }
 
     /**
+     * Удаляет трек из очереди
+     */
+    public void removeFromQueue(Track track) {
+        if (track != null) {
+            playbackQueue.remove(track);
+        }
+    }
+
+    /**
      * Очищает очередь воспроизведения
      */
     public void clearQueue() {
         playbackQueue.clear();
-        isPlayingFromQueue = false;
+    }
+
+    /**
+     * Очищает историю воспроизведения
+     */
+    public void clearHistory() {
+        playbackHistory.clear();
     }
 
     /**
@@ -280,22 +377,24 @@ public class ActiveTrackEnvironment {
     }
 
     /**
+     * Получает копию истории воспроизведения
+     */
+    public List<Track> getHistorySnapshot() {
+        return new ArrayList<>(playbackHistory);
+    }
+
+    /**
      * Проверяет, есть ли треки в очереди
      */
     public boolean hasQueueTracks() {
         return !playbackQueue.isEmpty();
     }
 
-    public void onTrackEnd() {
-        mediaPlayer.stop();
-        mediaPlayer.dispose();
-        App.CONTROLLER.loadLabels();
-
-        try {
-            this.playNext();
-        } catch (NoSuchElementException e) {
-            App.CONTROLLER.getSwitchStatusMusicButton().updateImage(false);
-        }
+    /**
+     * Проверяет, есть ли треки в истории
+     */
+    public boolean hasHistoryTracks() {
+        return !playbackHistory.isEmpty();
     }
 
     public boolean isPlaying() {

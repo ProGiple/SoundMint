@@ -1,8 +1,10 @@
 package com.satespace.soundmint.util;
 
+import javafx.animation.PauseTransition;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.effect.*;
 import javafx.scene.image.*;
@@ -69,6 +71,13 @@ public class Utils {
     public String formatDuration(Duration duration) {
         int minutes = (int) duration.toMinutes();
         int seconds = (int) (duration.toSeconds() % 60);
+
         return String.format("%d:%02d", minutes, seconds);
+    }
+
+    public void runLater(Runnable runnable, Duration duration) {
+        PauseTransition pauseTransition = new PauseTransition(duration);
+        pauseTransition.setOnFinished(e -> runnable.run());
+        pauseTransition.play();
     }
 }

@@ -65,4 +65,12 @@ public class SwitchStatusMusicButton extends AbsMusicButton {
         coloredPlayedImage.setFitWidth(IMAGE_SIZE);
         coloredPlayedImage.setFitHeight(IMAGE_SIZE);
     }
+
+    @Override
+    public void updateState() {
+        super.updateState();
+
+        boolean isPlaying = App.STORAGE.activeTrackEnvironment().isPlaying();
+        activedTooltip.setText(isPlaying ? "Поставить на паузу" : "Продолжить воспроизведение");
+    }
 }

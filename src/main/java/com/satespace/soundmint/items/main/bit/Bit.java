@@ -1,5 +1,6 @@
 package com.satespace.soundmint.items.main.bit;
 
+import com.satespace.soundmint.util.Utils;
 import javafx.animation.*;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -11,12 +12,15 @@ import javafx.util.Duration;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Bit extends StackPane {
+    public static final int FADE_TRANSITION = 175;
+    public static final int PAUSE_TRANSITION = 75;
+
     public Bit() {
         Circle innerCircle = new Circle(50, Color.TRANSPARENT);
         innerCircle.setStroke(Color.WHITE);
         innerCircle.setStrokeWidth(2);
 
-        Circle back = new Circle(150, Color.TRANSPARENT);
+        Circle back = new Circle(115, Color.TRANSPARENT);
         back.setStroke(Color.TRANSPARENT);
         back.setOpacity(0);
 
@@ -28,7 +32,7 @@ public class Bit extends StackPane {
         this.getChildren().removeIf(c -> c instanceof IBit);
 
         ThreadLocalRandom random = ThreadLocalRandom.current();
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 20; i++) {
             Color color1 = Color.rgb(
                     random.nextInt(255),
                     random.nextInt(255),
@@ -48,10 +52,12 @@ public class Bit extends StackPane {
                     ))
                     .translateX(random.nextInt(-75, 75))
                     .translateY(random.nextInt(-80, 80))
+                    .hasFill(random.nextBoolean())
                     .build();
 
+            circle.setOpacity(random.nextDouble(0.4, 1.0));
             if (hided) circle.setOpacity(0);
-            this.getChildren().add(circle);
+            this.getChildren().addFirst(circle);
         }
     }
 
@@ -78,15 +84,13 @@ public class Bit extends StackPane {
         for (int i = 0; i < this.getChildren().size(); i++) {
             Node node = this.getChildren().get(i);
             if (node instanceof IBit) {
-                PauseTransition pauseTransition = new PauseTransition(Duration.millis(75 * i));
-                pauseTransition.setOnFinished(e -> {
-                    FadeTransition fadeTransition = new FadeTransition(Duration.millis(175), node);
+                Utils.runLater(() -> {
+                    FadeTransition fadeTransition = new FadeTransition(Duration.millis(FADE_TRANSITION), node);
                     fadeTransition.setToValue(value);
                     fadeTransition.setCycleCount(1);
                     fadeTransition.setAutoReverse(false);
                     fadeTransition.play();
-                });
-                pauseTransition.play();
+                }, Duration.millis(PAUSE_TRANSITION * i));
             }
         }
     }

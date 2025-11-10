@@ -311,13 +311,12 @@ public class ActiveTrackEnvironment {
     public void onTrackEnd() {
         mediaPlayer.stop();
         mediaPlayer.dispose();
-        App.CONTROLLER.loadLabels();
-
         try {
             this.playNext();
         } catch (NoSuchElementException e) {
             App.CONTROLLER.getSwitchStatusMusicButton().updateImage(false);
         }
+        App.CONTROLLER.loadLabels();
     }
 
     public boolean isPlaying() {

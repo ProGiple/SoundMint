@@ -36,37 +36,35 @@ public class Utils {
         return text.substring(0, maxLength - 3) + "...";
     }
 
-    public static Image reColor(Image inputImage, Color oldColor, Color newColor) {
-        int W = (int) inputImage.getWidth();
-        int H = (int) inputImage.getHeight();
-        WritableImage outputImage = new WritableImage(W, H);
-        PixelReader reader = inputImage.getPixelReader();
-        PixelWriter writer = outputImage.getPixelWriter();
-        int ob=(int) oldColor.getBlue()*255;
-        int or=(int) oldColor.getRed()*255;
-        int og=(int) oldColor.getGreen()*255;
-        int nb=(int) newColor.getBlue()*255;
-        int nr=(int) newColor.getRed()*255;
-        int ng=(int) newColor.getGreen()*255;
-        for (int y = 0; y < H; y++) {
-            for (int x = 0; x < W; x++) {
-                int argb = reader.getArgb(x, y);
-                int a = (argb >> 24) & 0xFF;
-                int r = (argb >> 16) & 0xFF;
-                int g = (argb >>  8) & 0xFF;
-                int b =  argb        & 0xFF;
-                if (g==og && r==or && b==ob) {
-                    r=nr;
-                    g=ng;
-                    b=nb;
-                }
+    public Image reColor(Image original, Color targetColor) {
+        int width = (int) original.getWidth();
+        int height = (int) original.getHeight();
 
-                argb = (a << 24) | (r << 16) | (g << 8) | b;
-                writer.setArgb(x, y, argb);
+        WritableImage result = new WritableImage(width, height);
+        PixelReader reader = original.getPixelReader();
+        PixelWriter writer = result.getPixelWriter();
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Color pixel = reader.getColor(x, y);
+                double alpha = pixel.getOpacity();
+                if (pixel.getRed() > 0.9 && pixel.getGreen() > 0.9 && pixel.getBlue() > 0.9) {
+                    Color recolored = new Color(
+                            targetColor.getRed(),
+                            targetColor.getGreen(),
+                            targetColor.getBlue(),
+                            alpha
+                    );
+                    writer.setColor(x, y, recolored);
+                } else {
+                    writer.setColor(x, y, pixel);
+                }
             }
         }
-        return outputImage;
+
+        return result;
     }
+
 
     public String formatDuration(Duration duration) {
         int minutes = (int) duration.toMinutes();

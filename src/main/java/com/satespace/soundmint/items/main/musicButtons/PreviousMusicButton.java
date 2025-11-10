@@ -19,12 +19,11 @@ public class PreviousMusicButton extends AbsMusicButton {
             System.out.println(environment.getPlaybackQueue());
             System.out.println(environment.getPlaybackHistory());
         }
-        this.updateState();
-        App.CONTROLLER.getSwitchStatusMusicButton().updateImage(!environment.isPlaying());
     }
 
     @Override
     protected boolean isAllowed() {
+        System.out.println(App.STORAGE.activeTrackEnvironment().getPrevious());
         return App.STORAGE.activeTrackEnvironment().getPrevious() != null;
     }
 }

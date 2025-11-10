@@ -64,6 +64,13 @@ public class ActiveTrackEnvironment {
         App.CONTROLLER.loadLabels();
         setupMediaPlayerListeners();
         mediaPlayer.play();
+
+        App.CONTROLLER.getSwitchStatusMusicButton().updateImage(!this.isPlaying());
+        App.CONTROLLER.getPreviousMusicButton().updateState();
+        App.CONTROLLER.getNextMusicButton().updateState();
+
+        App.CONTROLLER.getBit().initialize(true);
+        App.CONTROLLER.getBit().show();
     }
 
     private void setupMediaPlayerListeners() {
@@ -85,6 +92,15 @@ public class ActiveTrackEnvironment {
                 App.CONTROLLER.getTrackAudioBar().setProgress(progress, false, mediaPlayer);
             }
         });
+
+        mediaPlayer.setAudioSpectrumInterval(0.05);
+        mediaPlayer.setAudioSpectrumListener((timestamp, duration, magnitudes, phases) -> {
+            double level = magnitudes[0];
+            double scale = 1 + Math.max(0, level + 60) / 60;
+
+            App.CONTROLLER.getBit().setScale(scale);
+        });
+
     }
 
     public void onNextClicked() {
@@ -137,10 +153,16 @@ public class ActiveTrackEnvironment {
         if (this.isPaused()) {
             mediaPlayer.play();
         }
+        App.CONTROLLER.getNextMusicButton().updateState();
+        App.CONTROLLER.getPreviousMusicButton().updateState();
+        App.CONTROLLER.getSwitchStatusMusicButton().updateImage(!this.isPlaying());
     }
 
     public void pause() {
         mediaPlayer.pause();
+        App.CONTROLLER.getNextMusicButton().updateState();
+        App.CONTROLLER.getPreviousMusicButton().updateState();
+        App.CONTROLLER.getSwitchStatusMusicButton().updateImage(!this.isPlaying());
     }
 
     public void playNext() throws NoSuchElementException {

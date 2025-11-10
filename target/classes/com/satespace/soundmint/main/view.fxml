@@ -11,11 +11,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Circle?>
 <?import com.satespace.soundmint.items.main.AudioVolumeBar?>
+<?import com.satespace.soundmint.items.main.bit.Bit?>
 <StackPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.satespace.soundmint.controllers.AppController"
-            prefWidth="400"
-            prefHeight="300"
-            stylesheets="@style.css">
+           fx:controller="com.satespace.soundmint.controllers.AppController"
+           prefWidth="400"
+           prefHeight="300"
+           stylesheets="@style.css">
     <BorderPane styleClass="body">
         <top>
             <PlaylistScroller
@@ -32,9 +33,9 @@
             </PlaylistScroller>
         </top>
         <center>
-            <HBox alignment="CENTER" spacing="40">
+            <HBox alignment="CENTER" spacing="90">
                 <StackPane>
-                    <Circle radius="100" styleClass="track-circle"/>
+                    <Bit fx:id="bit" styleClass="track-circle"/>
                 </StackPane>
 
                 <VBox alignment="CENTER" spacing="20">

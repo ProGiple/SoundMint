@@ -2,6 +2,7 @@ package com.satespace.soundmint.controllers;
 
 import com.satespace.soundmint.App;
 import com.satespace.soundmint.items.main.*;
+import com.satespace.soundmint.items.main.bit.Bit;
 import com.satespace.soundmint.items.main.musicButtons.NextMusicButton;
 import com.satespace.soundmint.items.main.musicButtons.PreviousMusicButton;
 import com.satespace.soundmint.items.main.musicButtons.SwitchStatusMusicButton;
@@ -30,6 +31,7 @@ public class AppController extends Controller {
     @FXML protected Label totalTimeLabel;
     @FXML protected AudioVolumeBar audioVolumeBar;
     @FXML protected Label audioVolumeLabel;
+    @FXML protected Bit bit;
 
     public void initialize() {
         this.loadLabels();

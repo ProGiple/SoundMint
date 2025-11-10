@@ -19,18 +19,10 @@ public class NextMusicButton extends AbsMusicButton {
             System.out.println(environment.getPlaybackQueue());
             System.out.println(environment.getPlaybackHistory());
         }
-        this.updateState();
-        App.CONTROLLER.getSwitchStatusMusicButton().updateImage(!environment.isPlaying());
     }
 
     @Override
     protected boolean isAllowed() {
         return App.STORAGE.activeTrackEnvironment().getNext() != null;
-    }
-
-    @Override
-    public void updateState() {
-        super.updateState();
-        this.replaceImage(SourceImage.NEXT_TRACK_BUTTON, IMAGE_SIZE);
     }
 }

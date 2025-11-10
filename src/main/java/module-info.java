@@ -8,6 +8,7 @@ module com.satespace.soundmint {
     requires java.compiler;
     requires javafx.base;
     requires org.jetbrains.annotations;
+    requires java.sql;
 
     opens com.satespace.soundmint to javafx.fxml;
     exports com.satespace.soundmint;
@@ -24,4 +25,5 @@ module com.satespace.soundmint {
     exports com.satespace.soundmint.controllers;
     opens com.satespace.soundmint.controllers to javafx.fxml;
     exports com.satespace.soundmint.items.main;
+    exports com.satespace.soundmint.items.main.bit;
 }

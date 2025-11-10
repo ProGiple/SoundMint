@@ -8,7 +8,6 @@ import com.satespace.soundmint.items.abs.ThemeUpdatable;
 import com.satespace.soundmint.util.Utils;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -19,8 +18,8 @@ public abstract class AbsMusicButton extends ImagedButton implements Clickable<A
     public static final int IMAGE_SIZE = 16;
     public static final double IN_DISABLED_OPACITY = 0.3;
 
-    private Color color;
-    private Image recoloredImage;
+    protected Color color;
+    protected ImageView recoloredImage;
     public AbsMusicButton(SourceImage sourceImage) {
         super(sourceImage, IMAGE_SIZE);
         this.setOnAction(this::onClick);
@@ -28,10 +27,7 @@ public abstract class AbsMusicButton extends ImagedButton implements Clickable<A
             this.setGraphic(imageView);
         });
         this.setOnMouseEntered(e -> {
-            ImageView imageView = new ImageView(this.recoloredImage);
-            imageView.setFitHeight(IMAGE_SIZE);
-            imageView.setFitWidth(IMAGE_SIZE);
-            this.setGraphic(imageView);
+            this.setGraphic(recoloredImage);
         });
     }
 
@@ -49,8 +45,8 @@ public abstract class AbsMusicButton extends ImagedButton implements Clickable<A
     @Override
     public void theme(Theme theme) {
         this.color = Color.web(theme.getHex());
-        this.recoloredImage = Utils.reColor(this.imageView.getImage(), Color.WHITE, this.color);
+        this.recoloredImage = new ImageView(Utils.reColor(this.imageView.getImage(), this.color));
+        recoloredImage.setFitWidth(IMAGE_SIZE);
+        recoloredImage.setFitHeight(IMAGE_SIZE);
     }
-
-
 }

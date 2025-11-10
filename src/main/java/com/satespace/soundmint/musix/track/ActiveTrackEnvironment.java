@@ -35,11 +35,9 @@ public class ActiveTrackEnvironment {
      * @param playlist - плейлист, из которого был запущен трек
      */
     public void play(Track track, Playlist playlist, boolean pushToHistory) {
-        // Сохраняем текущий трек в историю перед сменой
         if (this.activeTrack != null && !this.activeTrack.equals(track)) {
             if (pushToHistory)
                 playbackHistory.push(this.activeTrack);
-            // Ограничиваем размер истории
             if (playbackHistory.size() > 100) {
                 playbackHistory.removeLast();
             }
@@ -48,7 +46,6 @@ public class ActiveTrackEnvironment {
         this.activeTrack = track;
         this.activePlaylist = playlist;
 
-        // Перестраиваем очередь на основе нового плейлиста и трека
         this.rebuildQueue();
 
         if (mediaPlayer != null) {
@@ -103,10 +100,6 @@ public class ActiveTrackEnvironment {
 
     }
 
-    public void onNextClicked() {
-        Track nextTrack = this.peekNext();
-    }
-
     /**
      * Перестраивает очередь воспроизведения на основе активного плейлиста и текущего трека
      */
@@ -124,14 +117,12 @@ public class ActiveTrackEnvironment {
 
         switch (activePlaylist.getPlaybackMode()) {
             case SEQUENTIAL:
-                // Добавляем все треки после текущего
                 for (int i = currentIndex + 1; i < tracks.size(); i++) {
                     playbackQueue.offer(tracks.get(i));
                 }
                 break;
 
             case REPEAT_ALL:
-                // Добавляем все треки после текущего, затем все до текущего
                 for (int i = currentIndex + 1; i < tracks.size(); i++) {
                     playbackQueue.offer(tracks.get(i));
                 }
@@ -181,15 +172,12 @@ public class ActiveTrackEnvironment {
      * Получает и удаляет следующий трек из соответствующей коллекции
      */
     private Track getAndRemoveNext() {
-        // Сначала проверяем очередь
         if (!playbackQueue.isEmpty()) {
             return playbackQueue.poll();
         }
 
-        // Если очередь пуста, получаем следующий из плейлиста
         Track nextTrack = this.calculateNextTrack();
         if (nextTrack != null && activePlaylist != null) {
-            // Если следующий трек из плейлиста, добавляем текущий в историю
             if (activeTrack != null) {
                 playbackHistory.push(activeTrack);
             }
@@ -202,7 +190,6 @@ public class ActiveTrackEnvironment {
      * Получает и удаляет предыдущий трек из соответствующей коллекции
      */
     private Track getAndRemovePrevious() {
-        // Сначала проверяем историю
         if (!playbackHistory.isEmpty()) {
             Track previous = playbackHistory.pop();
 

@@ -47,6 +47,7 @@ public class SwitchStatusMusicButton extends AbsMusicButton {
         } else {
             environment.resume();
         }
+        this.updateState();
     }
 
     @Override
@@ -71,6 +72,6 @@ public class SwitchStatusMusicButton extends AbsMusicButton {
         super.updateState();
 
         boolean isPlaying = App.STORAGE.activeTrackEnvironment().isPlaying();
-        activedTooltip.setText(isPlaying ? "Поставить на паузу" : "Продолжить воспроизведение");
+        activedTooltip.setText(!isPlaying ? "Поставить на паузу" : "Продолжить воспроизведение");
     }
 }

@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -51,7 +52,9 @@ public class BitCircle extends Circle implements IBit {
 
     @Override
     public void scaled(double value) {
-        this.setScaleX(value * multiplier);
-        this.setScaleY(value * multiplier);
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(75), this);
+        scaleTransition.setToX(value * multiplier);
+        scaleTransition.setToY(value * multiplier);
+        scaleTransition.play();
     }
 }

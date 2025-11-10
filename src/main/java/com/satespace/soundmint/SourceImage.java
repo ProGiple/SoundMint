@@ -12,6 +12,7 @@ public enum SourceImage {
     TRACK_PAUSED_BUTTON,
     FAVOURITES_LIST_IMAGE,
     SETTINGS_BUTTON,
+    DEFAULT_TRACK_ARTWORK,
     CREATE_PLAYLIST_BUTTON;
 
     private final Image image;

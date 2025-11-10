@@ -15,10 +15,9 @@ public class ArtworkExtractor {
     public Image extractArtwork(File file) {
         Image artwork;
 
-        artwork = getEmbeddedArtwork(file);
-
+        artwork = file == null ? null : getEmbeddedArtwork(file);
         if (artwork == null) {
-            artwork = SourceImage.PLAYLIST_DEFAULT_IMAGE.asImage();
+            artwork = SourceImage.DEFAULT_TRACK_ARTWORK.asImage();
         }
 
         return artwork;

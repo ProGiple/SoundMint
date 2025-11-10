@@ -2,6 +2,7 @@ package com.satespace.soundmint.items.abs;
 
 import com.satespace.soundmint.items.abs.animations.RotateScalingAnimated;
 import com.satespace.soundmint.util.Utils;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;

@@ -10,6 +10,7 @@ module com.satespace.soundmint {
     requires org.jetbrains.annotations;
     requires java.sql;
     requires java.prefs;
+    requires javafx.graphics;
 
     opens com.satespace.soundmint to javafx.fxml;
     exports com.satespace.soundmint;

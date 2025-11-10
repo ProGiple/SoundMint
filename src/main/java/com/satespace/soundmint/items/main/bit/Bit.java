@@ -19,22 +19,31 @@ public class Bit extends StackPane implements ThemeUpdatable {
 
     private Color mainColor;
     public Bit() {
-        Circle innerCircle = new Circle(50, Color.TRANSPARENT);
-        innerCircle.setStroke(Color.WHITE);
-        innerCircle.setStrokeWidth(2);
+        TrackArtworkImage trackArtworkImage = new TrackArtworkImage();
+        trackArtworkImage.updateStroke(this.mainColor);
 
         Circle back = new Circle(115, Color.TRANSPARENT);
         back.setStroke(Color.TRANSPARENT);
         back.setFill(null);
         back.setOpacity(0);
 
-        this.getChildren().addAll(innerCircle, back);
+        BitGroup group = new BitGroup();
+
+        this.getChildren().addAll(group, back, trackArtworkImage);
         this.setAlignment(Pos.CENTER);
+
+        RotateTransition rot = new RotateTransition(Duration.seconds(45), group);
+        rot.setByAngle(360);
+        rot.setCycleCount(Animation.INDEFINITE);
+        rot.setInterpolator(Interpolator.LINEAR);
+        rot.play();
     }
 
     public void initialize(boolean hided) {
-        this.getChildren().removeIf(c -> c instanceof IBit);
+        BitGroup group = this.getGroup();
+        group.getChildren().removeIf(c -> c instanceof IBit);
 
+        this.getTrackArtworkCircle().updateImage();
         ThreadLocalRandom random = ThreadLocalRandom.current();
 
         double hue = mainColor.getHue();
@@ -65,19 +74,19 @@ public class Bit extends StackPane implements ThemeUpdatable {
 
             circle.setOpacity(random.nextDouble(0.4, 1.0));
             if (hided) circle.setOpacity(0);
-            this.getChildren().addFirst(circle);
+            group.getChildren().add(circle);
         }
     }
 
     public void setScale(double value) {
-        this.getChildren()
+        getGroup().getChildren()
                 .stream()
                 .filter(c -> c instanceof IBit)
                 .forEach(c -> ((IBit) c).scaled(value));
     }
 
     public void hide(boolean moment) {
-        if (moment) this.getChildren()
+        if (moment) getGroup().getChildren()
                 .stream()
                 .filter(c -> c instanceof IBit)
                 .forEach(c -> c.setOpacity(0));
@@ -89,8 +98,9 @@ public class Bit extends StackPane implements ThemeUpdatable {
     }
 
     private void fadeAnimation(double value) {
-        for (int i = 0; i < this.getChildren().size(); i++) {
-            Node node = this.getChildren().get(i);
+        BitGroup group = this.getGroup();
+        for (int i = 0; i < group.getChildren().size(); i++) {
+            Node node = group.getChildren().get(i);
             if (node instanceof IBit) {
                 Utils.runLater(() -> {
                     FadeTransition fadeTransition = new FadeTransition(
@@ -107,5 +117,14 @@ public class Bit extends StackPane implements ThemeUpdatable {
     @Override
     public void theme(Theme theme) {
         this.mainColor = Color.web(theme.getHex());
+        this.getTrackArtworkCircle().updateStroke(this.mainColor);
+    }
+
+    public TrackArtworkImage getTrackArtworkCircle() {
+        return (TrackArtworkImage) this.getChildren().getLast();
+    }
+
+    public BitGroup getGroup() {
+        return (BitGroup) this.getChildren().getFirst();
     }
 }

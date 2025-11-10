@@ -1,5 +1,7 @@
 package com.satespace.soundmint.items.main.bit;
 
+import com.satespace.soundmint.Theme;
+import com.satespace.soundmint.items.abs.ThemeUpdatable;
 import com.satespace.soundmint.util.Utils;
 import javafx.animation.*;
 import javafx.geometry.Pos;
@@ -11,10 +13,11 @@ import javafx.util.Duration;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Bit extends StackPane {
-    public static final int FADE_TRANSITION = 175;
-    public static final int PAUSE_TRANSITION = 75;
+public class Bit extends StackPane implements ThemeUpdatable {
+    public static final int FADE_TRANSITION = 100;
+    public static final int PAUSE_TRANSITION = 45;
 
+    private Color mainColor;
     public Bit() {
         Circle innerCircle = new Circle(50, Color.TRANSPARENT);
         innerCircle.setStroke(Color.WHITE);
@@ -22,6 +25,7 @@ public class Bit extends StackPane {
 
         Circle back = new Circle(115, Color.TRANSPARENT);
         back.setStroke(Color.TRANSPARENT);
+        back.setFill(null);
         back.setOpacity(0);
 
         this.getChildren().addAll(innerCircle, back);
@@ -32,18 +36,22 @@ public class Bit extends StackPane {
         this.getChildren().removeIf(c -> c instanceof IBit);
 
         ThreadLocalRandom random = ThreadLocalRandom.current();
+
+        double hue = mainColor.getHue();
+        double saturation = mainColor.getSaturation();
+        double brightness = mainColor.getBrightness();
         for (int i = 0; i < 20; i++) {
-            Color color1 = Color.rgb(
-                    random.nextInt(255),
-                    random.nextInt(255),
-                    random.nextInt(255));
-            Color color2 = Color.rgb(
-                    random.nextInt(255),
-                    random.nextInt(255),
-                    random.nextInt(255));
+            Color color1 = Color.hsb(
+                    hue + random.nextDouble(-30, 30),
+                    Utils.clamp(saturation + random.nextDouble(-0.6, 0.6)),
+                    Utils.clamp(brightness + random.nextDouble(-0.6, 0.6)));
+            Color color2 = Color.hsb(
+                    hue + random.nextDouble(-30, 30),
+                    Utils.clamp(saturation + random.nextDouble(-0.6, 0.6)),
+                    Utils.clamp(brightness + random.nextDouble(-0.6, 0.6)));
             BitCircle circle = BitCircle.builder()
                     .radius(random.nextInt(25, 100))
-                    .multiplier(random.nextDouble(0.4, 0.9))
+                    .multiplier(random.nextDouble(0.6, 0.9))
                     .blur(random.nextInt(50, 75))
                     .timelineFunction(p -> new Timeline(
                             new KeyFrame(Duration.ZERO, new KeyValue(p, color1)),
@@ -85,7 +93,8 @@ public class Bit extends StackPane {
             Node node = this.getChildren().get(i);
             if (node instanceof IBit) {
                 Utils.runLater(() -> {
-                    FadeTransition fadeTransition = new FadeTransition(Duration.millis(FADE_TRANSITION), node);
+                    FadeTransition fadeTransition = new FadeTransition(
+                            Duration.millis(FADE_TRANSITION), node);
                     fadeTransition.setToValue(value);
                     fadeTransition.setCycleCount(1);
                     fadeTransition.setAutoReverse(false);
@@ -93,5 +102,10 @@ public class Bit extends StackPane {
                 }, Duration.millis(PAUSE_TRANSITION * i));
             }
         }
+    }
+
+    @Override
+    public void theme(Theme theme) {
+        this.mainColor = Color.web(theme.getHex());
     }
 }

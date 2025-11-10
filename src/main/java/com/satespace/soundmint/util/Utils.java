@@ -80,4 +80,8 @@ public class Utils {
         pauseTransition.setOnFinished(e -> runnable.run());
         pauseTransition.play();
     }
+
+    public double clamp(double value) {
+        return Math.max(0, Math.min(1, value));
+    }
 }

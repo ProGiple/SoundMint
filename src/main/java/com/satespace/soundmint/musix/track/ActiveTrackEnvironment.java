@@ -105,15 +105,11 @@ public class ActiveTrackEnvironment {
      */
     private void rebuildQueue() {
         playbackQueue.clear();
-
         if (activePlaylist == null || activeTrack == null) return;
-
 
         List<Track> tracks = activePlaylist.getTrackList();
         int currentIndex = tracks.indexOf(activeTrack);
-
         if (currentIndex == -1) return;
-
 
         switch (activePlaylist.getPlaybackMode()) {
             case SEQUENTIAL:
@@ -143,6 +139,7 @@ public class ActiveTrackEnvironment {
     public void resume() {
         if (this.isPaused()) {
             mediaPlayer.play();
+            App.CONTROLLER.getBit().show();
         }
         App.CONTROLLER.getNextMusicButton().updateState();
         App.CONTROLLER.getPreviousMusicButton().updateState();
@@ -154,6 +151,7 @@ public class ActiveTrackEnvironment {
         App.CONTROLLER.getNextMusicButton().updateState();
         App.CONTROLLER.getPreviousMusicButton().updateState();
         App.CONTROLLER.getSwitchStatusMusicButton().updateImage(!this.isPlaying());
+        App.CONTROLLER.getBit().hide(false);
     }
 
     public void playNext() throws NoSuchElementException {

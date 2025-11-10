@@ -26,7 +26,6 @@ public class AudioNameLabel extends MintLabel {
             if (this.getPlacedTooltip() != null) Tooltip.uninstall(this, this.getPlacedTooltip());
             return;
         }
-
         String name = environment.getActiveTrack().getMetaObject().getName();
         super.setTooltip("Полное название: " + name);
     }

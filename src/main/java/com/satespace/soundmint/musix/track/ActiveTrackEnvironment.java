@@ -80,7 +80,7 @@ public class ActiveTrackEnvironment {
                     progress = newTime.toMillis() / total.toMillis();
                     if (progress >= 0.9995) {
                         progress = -1;
-                        onTrackEnd();
+                        this.onTrackEnd();
                     }
                 }
                 else progress = -1;

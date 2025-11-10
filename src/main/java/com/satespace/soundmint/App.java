@@ -58,6 +58,8 @@ public class App extends Application {
             switch (keyEvent.getCode()) {
                 case RIGHT -> player.seek(player.getCurrentTime().add(Duration.seconds(5)));
                 case LEFT -> player.seek(player.getCurrentTime().subtract(Duration.seconds(5)));
+                case UP -> player.setVolume(player.getVolume() + 0.1);
+                case DOWN -> player.setVolume(player.getVolume() - 0.1);
             }
         });
     }

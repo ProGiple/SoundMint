@@ -8,9 +8,7 @@ import com.satespace.soundmint.musix.track.ActiveTrackEnvironment;
 import com.satespace.soundmint.musix.track.Track;
 import com.satespace.soundmint.util.Utils;
 import javafx.event.ActionEvent;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 public class SwitchStatusMusicButton extends AbsMusicButton {
     private final ImageView originalPlayedImage;

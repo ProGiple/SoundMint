@@ -8,6 +8,7 @@ import com.satespace.soundmint.items.abs.ThemeUpdatable;
 import com.satespace.soundmint.util.Utils;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -20,8 +21,11 @@ public abstract class AbsMusicButton extends ImagedButton implements Clickable<A
 
     protected Color color;
     protected ImageView recoloredImage;
+    protected Tooltip activedTooltip = new Tooltip();
     public AbsMusicButton(SourceImage sourceImage) {
         super(sourceImage, IMAGE_SIZE);
+        Tooltip.install(this, activedTooltip);
+
         this.setOnAction(this::onClick);
         this.setOnMouseExited(e -> {
             this.setGraphic(imageView);

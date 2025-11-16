@@ -95,3 +95,27 @@
 .track-volume-label {
     -fx-text-fill: #757575;
 }
+
+.track-box {
+    -fx-background-color: #151515;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 20, 0.4, 0, 0);
+    -fx-max-height: 300;
+    -fx-max-width: 250;
+    -fx-padding: 50 10 50 10;
+    -fx-background-radius: 15;
+}
+
+.rate-speed-button {
+    -fx-background-color: #202020;
+    -fx-text-fill: white;
+    -fx-background-radius: 20;
+    -fx-min-height: 40;
+    -fx-min-width: 70;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 20, 0.4, 0, 0);
+}
+
+.modal {
+    -fx-background-color: #272727;
+    -fx-max-height: 100;
+    -fx-max-width: 100;
+}

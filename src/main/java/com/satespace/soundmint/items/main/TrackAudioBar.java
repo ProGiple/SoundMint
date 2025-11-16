@@ -21,12 +21,15 @@ public class TrackAudioBar extends ClickableBar {
     public TrackAudioBar() {
         super();
 
-        this.setOnMouseMoved(e -> {
+        this.setOnMouseDragged(e -> {
             if (App.STORAGE.activeTrackEnvironment().isClear()) {
                 return;
             }
 
             double progress = e.getX() / this.widthProperty().get();
+            if (progress < 0 || progress > 1) {
+                return;
+            }
 
             Label label = App.CONTROLLER.getSelectAudioTimeLabel();
             FadeTransition fadeTransition = new FadeTransition(Duration.millis(FADE_MILLIS), label);

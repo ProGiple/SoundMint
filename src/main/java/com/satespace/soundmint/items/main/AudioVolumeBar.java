@@ -3,21 +3,30 @@ package com.satespace.soundmint.items.main;
 import com.satespace.soundmint.App;
 import com.satespace.soundmint.items.abs.ClickableBar;
 import com.satespace.soundmint.musix.track.ActiveTrackEnvironment;
+import com.satespace.soundmint.util.PropertyValue;
 import com.satespace.soundmint.util.Utils;
 import javafx.animation.FadeTransition;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import lombok.Getter;
 
+@Getter
 public class AudioVolumeBar extends ClickableBar {
     public static final int FADE_MILLIS = 100;
 
     public AudioVolumeBar() {
         super();
+        this.setOnMouseDragged(e -> {
+            if (App.STORAGE.activeTrackEnvironment().isClear()) {
+                return;
+            }
 
-        this.setOnMouseMoved(e -> {
             double progress = e.getX() / this.widthProperty().get();
+            if (progress < 0 || progress > 1) {
+                return;
+            }
 
             Label label = App.CONTROLLER.getSelectAudioVolumeLabel();
             FadeTransition fadeTransition = new FadeTransition(Duration.millis(FADE_MILLIS), label);
@@ -38,11 +47,18 @@ public class AudioVolumeBar extends ClickableBar {
 
     @Override
     public void onClick(MouseEvent event) {
-        double progress = event.getX() / this.widthProperty().get();
-        this.setProgress(progress);
         ActiveTrackEnvironment environment = App.STORAGE.activeTrackEnvironment();
-        environment.getMediaPlayer().setVolume(progress);
+        if (environment.isClear()) {
+            return;
+        }
+
+        double progress = event.getX() / this.widthProperty().get();
+        environment.getVolume().setValue(progress);
         this.theme(App.STORAGE.theme());
-        App.CONTROLLER.getAudioVolumeLabel().setText(String.format("%.0f", progress * 100) + "%");
+    }
+
+    public void updateProgress(double d) {
+        this.setProgress(d);
+        App.CONTROLLER.getAudioVolumeLabel().setText(String.format("%.0f", d * 100) + "%");
     }
 }

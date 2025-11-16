@@ -2,6 +2,7 @@ package com.satespace.soundmint.util;
 
 import javafx.animation.PauseTransition;
 import javafx.beans.binding.Bindings;
+import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
 import javafx.scene.Node;

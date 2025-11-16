@@ -3,6 +3,7 @@ package com.satespace.soundmint.musix.track;
 import com.satespace.soundmint.App;
 import com.satespace.soundmint.musix.playlist.PlaybackMode;
 import com.satespace.soundmint.musix.playlist.Playlist;
+import com.satespace.soundmint.util.PropertyValue;
 import com.satespace.soundmint.util.Utils;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -22,6 +23,7 @@ public class ActiveTrackEnvironment {
     private Queue<Track> playbackQueue;
     private Deque<Track> playbackHistory;
 
+    private PropertyValue<Double> volume = new PropertyValue<>(1.0);
     public ActiveTrackEnvironment() {
         this.playbackMode = PlaybackMode.SEQUENTIAL;
         this.playbackQueue = new LinkedList<>();
@@ -95,9 +97,15 @@ public class ActiveTrackEnvironment {
             double level = magnitudes[0];
             double scale = 1 + Math.max(0, level + 60) / 60;
 
+            scale = scale * 1.25 * this.mediaPlayer.getVolume();
             App.CONTROLLER.getBit().setScale(scale);
         });
 
+        mediaPlayer.rateProperty().bind(App.CONTROLLER.getRateSpeedButton().getRate());
+        this.mediaPlayer.volumeProperty().bind(volume);
+        this.volume.addListener((o, v1, v2) -> {
+            App.CONTROLLER.getAudioVolumeBar().updateProgress(Math.max(Math.min(v2, 1.0), 0.0));
+        });
     }
 
     /**

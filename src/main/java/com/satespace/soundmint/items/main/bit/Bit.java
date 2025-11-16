@@ -1,14 +1,17 @@
 package com.satespace.soundmint.items.main.bit;
 
+import com.satespace.soundmint.App;
 import com.satespace.soundmint.Theme;
 import com.satespace.soundmint.items.abs.ThemeUpdatable;
 import com.satespace.soundmint.util.Utils;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -22,14 +25,21 @@ public class Bit extends StackPane implements ThemeUpdatable {
         TrackArtworkImage trackArtworkImage = new TrackArtworkImage();
         trackArtworkImage.updateStroke(this.mainColor);
 
-        Circle back = new Circle(115, Color.TRANSPARENT);
-        back.setStroke(Color.TRANSPARENT);
-        back.setFill(null);
-        back.setOpacity(0);
-
         BitGroup group = new BitGroup();
+        group.setMouseTransparent(true);
+        group.setPickOnBounds(false);
 
-        this.getChildren().addAll(group, back, trackArtworkImage);
+        Platform.runLater(() -> {
+            Rectangle rectangle = new Rectangle();
+            rectangle.widthProperty().bind(App.CONTROLLER.getCenter().widthProperty());
+            rectangle.heightProperty().bind(App.CONTROLLER.getCenter().heightProperty());
+            this.prefWidthProperty().bind(App.CONTROLLER.getCenter().widthProperty());
+            this.setClip(rectangle);
+        });
+
+        this.toBack();
+
+        this.getChildren().addAll(group, trackArtworkImage);
         this.setAlignment(Pos.CENTER);
 
         RotateTransition rot = new RotateTransition(Duration.seconds(45), group);

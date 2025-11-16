@@ -11,6 +11,7 @@ module com.satespace.soundmint {
     requires java.sql;
     requires java.prefs;
     requires javafx.graphics;
+    requires jdk.compiler;
 
     opens com.satespace.soundmint to javafx.fxml;
     exports com.satespace.soundmint;
@@ -27,5 +28,7 @@ module com.satespace.soundmint {
     exports com.satespace.soundmint.controllers;
     opens com.satespace.soundmint.controllers to javafx.fxml;
     exports com.satespace.soundmint.items.main;
+    exports com.satespace.soundmint.items.modals.playlist;
     exports com.satespace.soundmint.items.main.bit;
+    exports com.satespace.soundmint.items.modals.abs;
 }

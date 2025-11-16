@@ -46,6 +46,7 @@ public class SwitchStatusMusicButton extends AbsMusicButton {
             environment.resume();
         }
         this.updateState();
+        this.updateImage(!environment.isPlaying());
     }
 
     @Override

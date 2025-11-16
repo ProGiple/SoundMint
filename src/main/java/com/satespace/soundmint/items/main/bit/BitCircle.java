@@ -26,9 +26,14 @@ public class BitCircle extends Circle implements IBit {
                      boolean hasFill) {
         super(radius);
         this.multiplier = multiplier;
+        this.setMouseTransparent(true);
 
         this.setStrokeWidth(6);
         this.setEffect(new GaussianBlur(blur));
+
+        this.setMouseTransparent(true);
+        this.setPickOnBounds(false);
+        this.toBack();
 
         ObjectProperty<Color> dynamicColor = new SimpleObjectProperty<>(Color.RED);
         this.strokeProperty().bind(dynamicColor);

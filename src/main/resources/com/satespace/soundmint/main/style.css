@@ -116,6 +116,7 @@
 
 .modal {
     -fx-background-color: #272727;
-    -fx-max-height: 100;
-    -fx-max-width: 100;
+    -fx-padding: 15;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(gaussian, #000000, 30, 0.2, 0, 0);
 }

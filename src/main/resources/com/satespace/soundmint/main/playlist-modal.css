@@ -1,0 +1,32 @@
+.track-playlist-scroller {
+    -fx-background-radius: 10px;
+    -fx-background-color: #202020;
+}
+
+.track-playlist-scroller > .viewport {
+    -fx-background-color: transparent;
+}
+
+.track-playlist-scroller-box {
+    -fx-background-radius: 10px;
+    -fx-background-color: #202020;
+    -fx-spacing: 5;
+    -fx-padding: 5;
+}
+
+.playlist-track-pane {
+    -fx-pref-width: 60;
+    -fx-pref-height: 60;
+}
+
+.track-playlist-scroller-box-track-box {
+    -fx-background-color: #181818;
+    -fx-background-radius: 10px;
+    -fx-min-height: 75px;
+    -fx-padding: 0 0 0 5;
+}
+
+.track-playlist-scroller-box-track-label {
+    -fx-padding: 0 5 0 5;
+    -fx-text-fill: white;
+}

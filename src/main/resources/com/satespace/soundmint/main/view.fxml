@@ -14,7 +14,7 @@
            fx:controller="com.satespace.soundmint.controllers.AppController"
            prefWidth="400"
            prefHeight="300"
-           stylesheets="@style.css">
+           stylesheets="@style.css, @playlist-modal.css">
     <BorderPane fx:id="mainBody" styleClass="body">
         <top>
             <HorizontalScroller

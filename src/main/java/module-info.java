@@ -12,6 +12,7 @@ module com.satespace.soundmint {
     requires java.prefs;
     requires javafx.graphics;
     requires jdk.compiler;
+    // requires com.satespace.soundmint;
 
     opens com.satespace.soundmint to javafx.fxml;
     exports com.satespace.soundmint;

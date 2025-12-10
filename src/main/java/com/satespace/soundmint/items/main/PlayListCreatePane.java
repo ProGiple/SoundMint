@@ -5,6 +5,8 @@ import com.satespace.soundmint.SourceImage;
 import com.satespace.soundmint.items.abs.Clickable;
 import com.satespace.soundmint.items.abs.CollectionPane;
 import com.satespace.soundmint.items.abs.animations.RotateScalingAnimated;
+import com.satespace.soundmint.items.modals.abs.Modal;
+import com.satespace.soundmint.items.modals.playlist.PlaylistModal;
 import com.satespace.soundmint.musix.playlist.Playlist;
 import com.satespace.soundmint.util.Utils;
 import javafx.animation.FadeTransition;
@@ -76,6 +78,8 @@ public class PlayListCreatePane extends Pane implements Clickable<MouseEvent>, R
         App.STORAGE.playlists().add(playlist);
 
         PlaylistPane pane = App.CONTROLLER.createPlaylistPane(playlist);
+        Modal.open(new PlaylistModal(playlist), this);
+
         pane.setScaleX(0);
         pane.setScaleY(0);
 

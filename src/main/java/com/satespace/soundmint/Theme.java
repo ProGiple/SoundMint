@@ -9,6 +9,7 @@ public enum Theme {
     ORANGE("f5c92c"),
     GREEN("2ff52c"),
     BLUE("2c8af5"),
+    WHITE("ffffff"),
     RED("f52c39");
 
     private final String hex;

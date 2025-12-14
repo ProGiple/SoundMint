@@ -97,7 +97,7 @@ public class ActiveTrackEnvironment {
             double level = magnitudes[0];
             double scale = 1 + Math.max(0, level + 60) / 60;
 
-            scale = scale * 1.25 * this.mediaPlayer.getVolume();
+            scale = scale * 1.25 * Math.max(this.mediaPlayer.getVolume(), 0.6);
             App.CONTROLLER.getBit().setScale(scale);
         });
 

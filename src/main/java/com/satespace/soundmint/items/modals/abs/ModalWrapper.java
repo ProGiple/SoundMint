@@ -7,6 +7,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.scene.Node;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -41,9 +42,9 @@ public class ModalWrapper<E extends Modal> extends StackPane {
         if (!isShowed()) {
             List<ModalWrapper<Modal>> modals = controller.getOpenedModals(Modal.class, null).toList();
 
-            BoxBlur blur = new BoxBlur();
+            GaussianBlur blur = new GaussianBlur();
             modals.forEach(modal -> {
-                if (modal.getEffect() == null || (modal.getEffect() instanceof BoxBlur b && b.getWidth() < BLUR)) {
+                if (modal.getEffect() == null || (modal.getEffect() instanceof GaussianBlur b && b.getRadius() < BLUR)) {
                     bluredNodes.add(modal);
                     modal.setEffect(blur);
                 }
@@ -60,8 +61,8 @@ public class ModalWrapper<E extends Modal> extends StackPane {
                     });
 
             Timeline timeline = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(blur.widthProperty(), 0)),
-                    new KeyFrame(Duration.millis(BLUR_TIME_MILLIS), new KeyValue(blur.widthProperty(), BLUR))
+                    new KeyFrame(Duration.ZERO, new KeyValue(blur.radiusProperty(), 0)),
+                    new KeyFrame(Duration.millis(BLUR_TIME_MILLIS), new KeyValue(blur.radiusProperty(), BLUR))
             );
             timeline.play();
 
@@ -76,23 +77,23 @@ public class ModalWrapper<E extends Modal> extends StackPane {
             this.getChildren().remove(modal);
             App.CONTROLLER.getRoot().getChildren().remove(this);
 
-            BoxBlur blur = new BoxBlur();
+            GaussianBlur blur = new GaussianBlur();
             Timeline timeline = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(blur.widthProperty(), BLUR)),
-                    new KeyFrame(Duration.millis(BLUR_TIME_MILLIS), new KeyValue(blur.widthProperty(), 0))
+                    new KeyFrame(Duration.ZERO, new KeyValue(blur.radiusProperty(), BLUR)),
+                    new KeyFrame(Duration.millis(BLUR_TIME_MILLIS), new KeyValue(blur.radiusProperty(), 0))
             );
 
             Node lastNode = this.bluredNodes.isEmpty() ? null : this.bluredNodes.getLast();
             if (lastNode instanceof ModalWrapper) {
                 timeline.setOnFinished(actionEvent -> {
-                    if (!(lastNode.getEffect() instanceof BoxBlur b) || b.getWidth() <= 0) lastNode.setEffect(null);
+                    if (!(lastNode.getEffect() instanceof GaussianBlur b) || b.getRadius() <= 0) lastNode.setEffect(null);
                 });
                 lastNode.setEffect(blur);
             }
             else {
                 timeline.setOnFinished(actionEvent -> {
                     bluredNodes.forEach(n -> {
-                        if (!(n.getEffect() instanceof BoxBlur b) || b.getWidth() <= 0) n.setEffect(null);
+                        if (!(n.getEffect() instanceof GaussianBlur b) || b.getRadius() <= 0) n.setEffect(null);
                     });
                 });
                 this.bluredNodes.forEach(b -> b.setEffect(blur));

@@ -54,7 +54,7 @@ public class ModalWrapper<E extends Modal> extends StackPane {
             Stream.of(body.getTop(), body.getCenter(), body.getBottom())
                     .filter(b -> b != null &&
                             (b.getEffect() == null ||
-                            (b.getEffect() instanceof BoxBlur bb && bb.getWidth() < BLUR)))
+                            (b.getEffect() instanceof GaussianBlur bb && bb.getRadius() < BLUR)))
                     .forEach(b -> {
                         b.setEffect(blur);
                         bluredNodes.addFirst(b);
